@@ -56,7 +56,7 @@ document.getElementById("SEND_TEST_REQUEST").onclick = function (btn) {
     document.getElementById('TEST_PROGRESS').value = 0;
     btn.target.disabled = true;
     SEND_XHR_REQUEST({
-        url: './doc/img.png',
+        url: './doc/img.webp',
         responseType: 'blob', // 设置为二进制流
         onprogress: (event) => {
             document.getElementById('TEST_PROGRESS').style.setProperty('--success-color', '#28a745');
