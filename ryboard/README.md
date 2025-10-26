@@ -15,7 +15,7 @@
 
 最后，开源不易，如果你喜欢这个项目，请给个 Star 鼓励一下作者吧！
 
-- 🌟 [GitHub 仓库](https://github.com/Roy-Jin/web-demo/ryboard)
+- 🌟 [GitHub 仓库](https://github.com/Roy-Jin/web-demo/tree/main/ryboard)
 - 👤 [原作者 daidr](https://github.com/daidr)
 
 感谢您的支持与关注！
