@@ -1,0 +1,35 @@
+.terminal {
+    --color: #fff;
+    --background: #1f1f1f;
+    --animation: terminal-bar;
+    --size: 1.3;
+    --font: 'Fira Code', 'Consolas', 'Courier New', monospace;
+    padding: 2rem;
+}
+
+@media screen and (max-width: 768px) {
+    .terminal {
+        padding: .3rem;
+        --size: 1;
+    }
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+dialog {
+    width: 100vw;
+    height: 100vh;
+    border: none;
+    overflow: hidden;
+    background: #1f1f1f;
+}
+
+dialog iframe {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}

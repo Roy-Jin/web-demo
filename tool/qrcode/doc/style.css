@@ -1,0 +1,57 @@
+::selection {
+    background-color: #88ffc1;
+    color: #333;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    overflow: hidden;
+    background: #333;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    color: azure;
+}
+
+h1 {
+    margin: 20px;
+}
+
+#qrcode {
+    z-index: -1;
+    position: absolute;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transform: rotate(-360deg) scale(0);
+    transition: all .3s ease-in-out;
+}
+
+#qrcode img {
+    width: 85vw;
+    max-width: 300px;
+    transition: all .3s ease-in-out;
+}
+
+#LOG {
+    margin-top: 24px;
+    font-weight: 666;
+}
+
+@media screen and (orientation: landscape) {
+    #qrcode img {
+        width: auto;
+        height: 55vh;
+        max-height: 300px;
+    }
+}

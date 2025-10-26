@@ -1,0 +1,199 @@
+html {
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    font-family: Arial, sans-serif;
+    background-color: palevioletred;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #222;
+    height: 100vh;
+    width: 100vw;
+}
+
+#Z-Box {
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.6);
+    position: fixed;
+    display: none;
+    z-index: 99;
+}
+
+#colse-Z {
+    position: absolute;
+    font-size: 300%;
+    text-align: right;
+    color: #eee;
+    width: 100vw;
+    height: 100vh;
+}
+
+#settings {
+    text-align: center;
+    font-family: "Museo Sans", sans-serif;
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ddd;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid #fff;
+    min-width: 60vw;
+    height: 0vh;
+    transition: height .5s ease;
+    box-shadow: 0 0 50px #777;
+}
+
+#settings h3 {
+    margin: 0;
+    padding: 0;
+}
+
+#setTypeDiv button {
+    width: 30%;
+    padding: 5px;
+    margin: 3px;
+    border: 1px solid #fff;
+    color: #ddd;
+    transition: .1s ease;
+    border-radius: 5px;
+} 
+
+#setTypeDiv button:active {
+    font-size: large;
+}
+
+#setDifficultyDiv button {
+    width: 60%;
+    padding: 5px;
+    margin: 2px;
+    border: 1px solid #fff;
+    color: #ddd;
+    transition: .1s ease;
+    border-radius: 5px;
+}
+
+#setDifficultyDiv button:active {
+    width: 80%;
+    font-size: large;
+}
+
+#colse-set-Btn {
+    font-size: 150%;
+    position: absolute;
+    bottom: 0%;
+    left: 0;
+    width: 100%;
+    border: none;
+    background-color: lightcoral;
+    color: #ddd;
+    border-radius: 3px;
+}
+
+#settingBtn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 10px 15px;
+    background-color: #337ab7;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: 0.3s ease;
+    cursor: pointer;
+    font-size: 110%;
+    z-index: 98;
+}
+
+#settingBtn:hover {
+    background-color: skyblue;
+    color: #555;
+    font-size: larger;
+    box-shadow: 0 0 50px #9dd1ff;
+}
+
+.container {
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    border-radius: 50px;
+    border: 1px solid #fff;
+    padding: 50px;
+    background-color: rgb(220, 220, 220);
+}
+
+.container .game {
+    margin-top: 20px;
+}
+
+.container .game .row {
+    display: flex;
+    justify-content: center;
+}
+
+.cell {
+    width: 80px;
+    height: 80px;
+    border: 2px solid #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 48px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.cell:active {
+    background-color: #333;
+    color: #ccc;
+    box-shadow: 0px 0px 100px rgba(0, 0, 0, 0.8);
+}
+
+.container .result {
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: 120%;
+}
+
+@media (max-width: 600px) {
+    .cell {
+        width: 60px;
+        height: 60px;
+        font-size: 36px;
+    }
+}
+
+@media (min-width: 767px) {
+    .cell {
+        width: 100px;
+        height: 100px;
+        font-size: 50px;
+    }
+}
+
+@media (min-width: 1023px) {
+    .cell {
+        width: 150px;
+        height: 150px;
+        font-size: 80px;
+    }
+}
+
+@media (max-height: 700px) {
+    .cell {
+        width: 60px;
+        height: 60px;
+        font-size: 36px;
+    }
+}

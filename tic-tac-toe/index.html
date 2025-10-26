@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Tic Tac Toe</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <link rel="shortcut icon" href="/icon/favicon.ico">
+    <link rel="stylesheet" href="./css/index.css">
+    <meta name="description" content="井字棋游戏，简单实现井字棋AI算法，gitee项目开源">
+    <meta name="keywords" content="Tic Tac Toe, 井字棋, roy-jin, Gitee项目开源">
+</head>
+
+<body>
+    <div onclick="Box('show', 'settings')" id="settingBtn" title="设置">&#9881;</div>
+
+    <div id="Z-Box">
+        <div id="colse-Z" onclick="Box('close', 'settings')"></div>
+        <div id="settings">
+            <h3 title="Settings">设置</h3>
+            <hr>
+            <div id="setTypeDiv" title="玩家&AI类型选择框">
+                <button id="ai" onclick="setType('ai');initGame(Difficulty, gameType)">A I<br>模式</button>或
+                <button id="player" onclick="setType('player');initGame(Difficulty, gameType)">双人<br>模式</button>
+            </div>
+            <hr>
+            <div>AI模式 难度</div>
+            <div id="setDifficultyDiv" title="AI难度选择框">
+                <button id="easy" onclick="setDifficulty('easy')" style="background-color: olivedrab;"></button>
+                <button id="medium" onclick="setDifficulty('medium')" style="background-color: orange;"></button>
+                <button id="hard" onclick="setDifficulty('hard')" style="background-color: blueviolet;"></button>
+            </div>
+
+            <button id="colse-set-Btn" onclick="Box('close', 'settings');">关闭</button>
+        </div>
+    </div>
+
+    <div class="container" id="container">
+        <h3>井字棋 (Tic Tac Toe)</h3>
+        <div class="game" id="game">
+            <div class="row">
+                <div class="cell" onclick="playerMove(0, 0)"></div>
+                <div class="cell" onclick="playerMove(0, 1)"></div>
+                <div class="cell" onclick="playerMove(0, 2)"></div>
+            </div>
+            <div class="row">
+                <div class="cell" onclick="playerMove(1, 0)"></div>
+                <div class="cell" onclick="playerMove(1, 1)"></div>
+                <div class="cell" onclick="playerMove(1, 2)"></div>
+            </div>
+            <div class="row">
+                <div class="cell" onclick="playerMove(2, 0)"></div>
+                <div class="cell" onclick="playerMove(2, 1)"></div>
+                <div class="cell" onclick="playerMove(2, 2)"></div>
+            </div>
+        </div>
+        <div class="result" id="result">点击格子即可开始！</div>
+    </div>
+
+
+    <script src="./js/index.js"></script>
+</body>
+
+</html>

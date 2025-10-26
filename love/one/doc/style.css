@@ -1,0 +1,63 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: pink;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+iframe {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    transition: opacity 2s;
+}
+
+.toast {
+    position: fixed;
+    width: 85%;
+    bottom: 0px;
+    left: 50%;
+    padding: 10px;
+    transform: translateX(-50%);
+    border-radius: 8px;
+    background-color: rgba(245, 245, 220, 0.8);
+    color: cadetblue;
+    font-weight: 900;
+    text-align: center;
+    z-index: 99;
+    transition: all 1.5s ease-out;
+}
+
+.music {
+    position: fixed;
+    z-index: 98;
+    top: 50px;
+    right: 25px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, .2);
+    backdrop-filter: blur(5px);
+    width: 50px;
+    height: 50px;
+    padding: 5px;
+    /* animation: rotate 10s infinite linear; */
+    transform: scale(.75);
+    transition: all .3s ease-in-out;
+    cursor: pointer;
+}
+
+@keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+.music img {
+    width: 100%;
+    height: 100%;
+    filter: invert(66%);
+    -webkit-user-drag: none;
+    transition: all .3s ease-in-out;
+}

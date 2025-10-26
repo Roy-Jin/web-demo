@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+
+<head>
+    
+    <title id="titleWeb"></title>
+    <!-- Required meta tags -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link rel="shortcut icon" href="/icon/favicon.ico">
+    <meta name="description" content="love ask">
+    <meta name="keywords" content="love ask, roy-jin">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/spinload.css">
+    <link rel="stylesheet" type="text/css" href=" https://fonts.googleapis.com/css?family=Pacifico" />
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+</head>
+
+<!-- 关闭 loadSound ，页面加载后不能自动播放！ -->
+<!-- <body onload="loadSound()"> -->
+<body>
+    <div class="wrapper">
+        <!-- Preloader -->
+        <div id="preloader">
+            <div class="spinner">
+                <div class="rect1"></div>
+                <div class="rect2"></div>
+                <div class="rect3"></div>
+                <div class="rect4"></div>
+                <div class="rect5"></div>
+            </div>
+        </div>
+        <div id="bg"></div>
+        <div class="content">
+            <header>
+                <h2 id="title"></h2>
+                <h4 id="desc"></h4>
+            </header>
+            <button id="yes" type="button" class="btn btn-info btn-lg"></button>
+            <button id="no" type="button" class="btn btn-danger btn-lg"></button>
+        </div>
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="./js/jquery-3.4.1.min.js"></script>
+    <script src="./js/popper.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/sweetalert2@9.js"></script>
+    <script src="./config.js"></script>
+    <script src="./js/main.js"></script>
+
+    <script>
+        function loadSound() {
+            var audio = new Audio('../love/doc/music-2.mp3');
+            audio.play();
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,70 @@
+﻿<!doctype html>
+<html>
+
+<!-- 原项目地址：http://www.kennethcachia.com/shape-shifter/ -->
+
+<head>
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta http-equiv="Expires" content="0">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+	<link rel="shortcut icon" href="/icon/favicon.ico">
+	<meta name="description" content="Say Something...">
+	<meta name="keywords" content="love, roy-jin, Say Something">
+	<title>Say Something...</title>
+
+	<style>
+		html,
+		body {
+			margin: 0px;
+			width: 100%;
+			height: 100%;
+			overflow: hidden;
+			background: #222;
+			user-select: none;
+			color: #222;
+		}
+	</style>
+
+</head>
+
+<body>
+	<canvas style="position:absolute;width:100%;height:100%;z-index:9999" class="canvas"></canvas>
+	<!-- 不可删除这个👇 -->
+	<div class="overlay" style="display: none;">
+		<div class="tabs">
+			<div class="tabs-labels"><span class="tabs-label">Commands</span><span class="tabs-label">Info</span><span
+					class="tabs-label">Share</span></div>
+			<div class="tabs-panels">
+				<ul class="tabs-panel commands"></ul>
+			</div>
+		</div>
+	</div>
+	<!-- 不可删除这个👆 -->
+	<script>
+		var S = {
+			init: function () {
+				var action = window.location.href,
+					i = action.indexOf('?a='); // 使用参数 “a” 可以自定义文字
+
+				S.Drawing.init('.canvas');
+				document.body.classList.add('body--ready');
+
+				if (i !== -1) {
+					S.UI.simulate(decodeURI(action).substring(i + 3));
+				} else {
+					S.UI.simulate('|#circle|#countdown 3|于|倩|我...|爱|你|❤|❤ ❤|❤ ❤ ❤|❤ ❤|❤|#circle||你|是|我的|唯一|唯|一|。|#rectangle|The End!');
+				}
+
+				S.Drawing.loop(function () {
+					S.Shape.render();
+				});
+			}
+		};
+	</script>
+	<script src="./js/index.js"></script>
+
+</body>
+
+</html>

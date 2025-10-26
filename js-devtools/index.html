@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>JS TEST</title>
+	<link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+
+	<header align="center">
+		<h1>This is a JS test Page.</h1>
+		<p>Please open
+			<b style="color: cadetblue" title="F12">DevTools</b>
+			to show all result.
+		</p>
+	</header>
+
+	<main>
+		<div class="content">
+			<b>The Issues Info:</b>
+			<div id="Issues" class="scrollbar">
+				<div style="text-align: center;padding: 5px;color: cadetblue;" info>
+					<h1>﹝ℹ﹞</h1>
+					<h3>
+						Haven't encountered any issues yet, please open DevTools to access more issues.
+					</h3>
+				</div>
+			</div>
+		</div>
+		<textarea type="text" id="dev_area" class="scrollbar" placeholder=">"></textarea>
+	</main>
+
+	<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<script src="./_Issues_.js"></script>
+	<script src="./_Obj_.js"></script>
+	<script>
+		/**
+		 * This script is active!
+		 */
+
+		_Issues.Init();
+	</script>
+
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link rel="stylesheet" href="./doc/style.css">
+    <link rel="shortcut icon" href="/icon/favicon.ico">
+    <meta name="description" content="URI转码工具">
+    <meta name="keywords" content="URI, roy-jin, 转码工具">
+    <title>URI 转码工具</title>
+</head>
+
+<body>
+    <h2 style="color: #eee;">URI 解码器/编码器</h2>
+    <form onsubmit="return false;">
+        <input type="text" id="input" placeholder="在这里输入需要拼接的链接">
+        <label for="textarea">解码/编码 内容：</label>
+        <textarea style="min-height: 10vh;" type="text" id="textarea" placeholder="在这里输入编码或解码内容"></textarea>
+        <button type="submit" onclick="decode()">解码</button>
+        <button type="submit" onclick="encode()">编码</button>
+    </form>
+    <button type="submit" onclick="QR()">创建 QR</button> <button type="submit" onclick="copyResult()">复制结果</button>
+    <div id="log"></div>
+    
+    <div id="result">解码/编码 结果：</div>
+    <div id="qrcode"></div>
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/qrcodejs/1.0.0/qrcode.js"></script>
+    <script src="./doc/script.js"></script>
+</body>
+
+</html>

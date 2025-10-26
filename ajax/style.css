@@ -1,0 +1,80 @@
+@import url("./doc/base.css");
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+.title {
+    text-align: center;
+    position: sticky;
+}
+
+.container {
+    gap: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 3rem 0;
+}
+
+.card {
+    width: 85%;
+    max-width: 50rem;
+    padding: 1rem;
+    border-radius: 10px;
+    border: 1px solid var(--secondary-color);
+    position: relative;
+    overflow: hidden;
+}
+
+.card button {
+    font-size: large;
+}
+
+.card .card-title {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    margin-bottom: .5rem;
+    border-bottom: 1px solid var(--secondary-color);
+}
+
+.card .card-content {
+    margin: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+#RESPONSE_CONTAINER {
+    user-select: text;
+    overflow: auto;
+}
+
+#RESPONSE_CONTAINER::-webkit-scrollbar {
+    height: .68rem;
+}
+
+#RESPONSE_CONTAINER::-webkit-scrollbar-thumb {
+    cursor: pointer;
+    border-radius: 1rem;
+    background-color: var(--scrollbar-thumb-color);
+}
+
+#TEST_IMAGE {
+    transition: all 1s ease-in-out;
+    border: 1px solid var(--secondary-color);
+    border-radius: var(--border-radius);
+    -webkit-user-drag: none;
+    width: 100%;
+    height: auto;
+    opacity: 0.5;
+}
+
+@keyframes scale {
+    0% {transform: scale(1);}
+    50% {transform: scale(0.95);}
+    100% {transform: scale(1);}
+}

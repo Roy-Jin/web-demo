@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width" />
+    <link rel="stylesheet" href="./doc/style.css">
+    </link>
+    <title>2048</title>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="header">
+            <div class="title">
+                <h3 class="name">2048</h3>
+                <div class="score-area">
+                    <div class="score">
+                        <span class="label">已得分</span>
+                        <span class="value">0</span>
+                    </div>
+                    <div class="best">
+                        <span class="label">最高分</span>
+                        <span class="value">0</span>
+                    </div>
+                </div>
+            </div>
+            <div class="btn">
+                <div class="change-bgColor">🎨</div>
+                <div class="new-game-btn">重置</div>
+            </div>
+        </div>
+        <div class="game-area">
+            <div id="game-start">开始吧</div>
+            <div id="board">
+                <div class="board-box"></div>
+                <div class="game-over">
+                    <div class="label">游戏结束!</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">「2048」算法由<span id="link">Roy-Jin</span>编写并提供支持.</div>
+</body>
+
+<!-- Script files -->
+<script src="./doc/ColorMap.js"></script>
+<script src="./doc/Cell.js"></script>
+<script src="./doc/CellBorder.js"></script>
+<script src="./doc/Game.js"></script>
+<script>
+    // 缓存数据
+    const cacheKey = 'BEST_SCORE_2048';
+    const cacheColor = 'CACHE_COLOR_2048';
+
+    window.onload = function () {
+        document.querySelector('.best .value').innerText = localStorage.getItem(cacheKey) || 0;
+
+        // window加载完成后，创建游戏对象
+        document.querySelector("#game-start").addEventListener("click", function (e) {
+            e.currentTarget.style.display = "none";
+            document.querySelector("#board").style.display = "block";
+            document.documentElement.style.setProperty('--board-bg', localStorage.getItem(cacheColor));
+            const game = new Game([4, 4], cacheKey);
+        })
+
+        // 切换配色
+        document.querySelector(".change-bgColor").addEventListener("click", function (e) {
+            // 弹出颜色选择框
+            const input = document.createElement("input");
+            input.type = "color";
+            input.value = localStorage.getItem(cacheColor) || "#816311";
+            input.addEventListener("input", function (e) {
+                document.documentElement.style.setProperty('--board-bg', e.target.value);
+            });
+            input.addEventListener("change", function (e) {
+                if (!confirm("是否应用该配色？")) {
+                    document.documentElement.style.setProperty('--board-bg', localStorage.getItem(cacheColor));
+                    // 取消选择，恢复默认配色
+                    // localStorage.setItem(cacheColor, "#816311");
+                    // document.documentElement.style.setProperty('--board-bg', "#816311");
+                } else {
+                    localStorage.setItem(cacheColor, e.target.value);
+                }
+                input.remove();
+            });
+            input.click();
+        });
+    }
+</script>
+
+</html>

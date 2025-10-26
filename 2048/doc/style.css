@@ -1,0 +1,233 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+:root {
+    --bg-color: #222;
+    --board-bg: #816311;
+    --cell-bg: rgba(255, 255, 255, .35);
+}
+
+body,
+html {
+    background-color: var(--bg-color);
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg-color);
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.header {
+    width: 100%;
+    padding: 10px 20px;
+}
+
+.header .title {
+    display: flex;
+    justify-content: space-between;
+}
+
+.header .title .name {
+    margin: .5rem;
+    font-size: 2rem;
+    color: #776e65;
+}
+
+.score-area {
+    display: inline-flex;
+}
+
+.score-area>div {
+    background-color: #bbada0;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2px 12px;
+    margin: 0 3px;
+}
+
+.score-area .label {
+    color: #473900;
+    font-size: 14px;
+}
+
+.score-area .value {
+    font-weight: bold;
+    color: #fff;
+    text-shadow: #000 1px 1px 5px;
+    font-size: 24px;
+    position: relative;
+}
+
+.score-area .score .effect {
+    left: 0;
+    top: 500%;
+    opacity: 0;
+    font-size: 1.4rem;
+    position: absolute;
+    text-shadow: #000 1px 1px 5px;
+    animation: showEffect 0.8s ease-out;
+    pointer-events: none;
+}
+
+@keyframes showEffect {
+    20% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        top: 0;
+    }
+}
+
+.header .btn {
+    margin-top: 10px;
+    text-align: right;
+    grid-gap: 0;
+}
+
+.header .btn>div {
+    display: inline-block;
+    height: 38px;
+    line-height: 38px;
+    text-align: center;
+    text-shadow: #000 1px 1px 5px;
+    transition: all 0.3s ease;
+    color: #fff;
+    font-size: 1.2rem;
+    padding: 2px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 0 3px;
+}
+
+.header .change-bgColor {
+    background: linear-gradient(to right top, #845ec2, #d65db1, #ff6f91, #ff9671, #ffc75f, #f9f871);
+}
+
+.header .new-game-btn {
+    background-color: #97443e;
+}
+
+#game-start {
+    color: lightgreen;
+    background-color: rgba(127, 255, 127, 0.3);
+    box-shadow: 0px 0px 10px lightgreen;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: xx-large;
+}
+
+.game-area {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+#board {
+    transition: all 0.3s ease;
+    background-color: var(--board-bg);
+    border-radius: 6px;
+    overflow: hidden;
+    display: none;
+    position: relative;
+}
+
+.board-box {
+    margin: 16px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.game-over {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .6);
+    border: 1px solid #fff;
+    transition: all 0.3s ease;
+    z-index: 10;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+}
+
+.game-over.active {
+    opacity: 1;
+}
+
+.game-over .label {
+    text-shadow: #000 0px 0px 5px;
+    font-size: 2rem;
+    font-weight: bolder;
+    color: #F6DDCC;
+}
+
+.row-cell {
+    display: flex;
+}
+
+.cell {
+    width: 78px;
+    height: 78px;
+    line-height: 78px;
+
+    background-color: var(--cell-bg);
+    border-radius: 10px;
+    border: 2px solid var(--board-bg);
+    transition: all 0.3s ease;
+    font-size: 2rem;
+    font-weight: bolder;
+    text-align: center;
+
+    position: relative;
+    z-index: 1;
+}
+
+.real-cell {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 1;
+    z-index: 10;
+}
+
+.footer {
+    position: fixed;
+    bottom: .5rem;
+    width: 100%;
+    text-align: center;
+    font-size: .6rem;
+    color: #ffffff;
+    transition: all 0.3s ease;
+    opacity: 0.1;
+}
+
+.footer:hover {
+    opacity: 1;
+}
+
+.footer #link {
+    color: cornflowerblue;
+    font-weight: bold;
+    padding: 0 5px;
+}

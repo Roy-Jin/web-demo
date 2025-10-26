@@ -1,0 +1,102 @@
+body {
+    user-select: none;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #555;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+#container {
+    position: relative;
+    width: 500px;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 40px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    color: #fff;
+    text-align: center;
+}
+
+h1 {
+    font-size: 36px;
+    margin-bottom: 30px;
+}
+
+p {
+    margin: 10px 0;
+}
+
+.btn {
+    margin: 5px;
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #337ab7;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #23527c;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    background-color: rgba(0, 0, 0, 0.8);
+    min-width: 160px;
+    z-index: 1;
+    padding: 0px;
+    border-radius: 4px;
+    height: 0px;
+    overflow: hidden;
+    transition: 0.3s ease-in;
+}
+
+.setting-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background-color: #337ab7;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    cursor: pointer;
+}
+
+.setting-toggle:hover {
+    background-color: #23527c;
+}
+
+.setting-content {
+    text-align: center;
+    position: fixed;
+    top: 50%;
+    right: 50px;
+    transform: translate(0, -50%);
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 0px;
+    border-radius: 4px;
+    overflow: hidden;
+    height: 0px;
+    transition: 0.3s ease-in;
+    z-index: 2;
+}
+
+.volume-slider {
+    width: 200px;
+    margin: 10px auto;
+}

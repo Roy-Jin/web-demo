@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<!-- 原项目地址 https://github.com/wongjohn/for-my-love -->
+
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link href="./css/main.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="./css/after.css" type="text/css">
+    <link rel="shortcut icon" href="/icon/favicon.ico">
+    <meta name="description" content="与小晋同学聊天">
+    <meta name="keywords" content="love, roy-jin, 与小晋同学聊天">
+    <!-- <link rel="preload" href="./img/with.jpg" as="image"> -->
+    <title>与 小晋同学 聊天中</title>
+</head>
+
+<body>
+    <div id="mobile" :class="{ 'has-prompt': hasPrompt }">
+        <div id="mobile-head">
+            <div id="mobile-head-title">与 小晋同学 聊天中</div>
+        </div>
+        <div id="mobile-body">
+            <div id="mobile-body-bg"></div>
+            <div id="mobile-body-content">
+                <div id="mock-msg-row" class="msg-row">
+                    <div id="mock-msg" class="msg" v-html="latestMsgContent"></div>
+                </div>
+                <div class="msg-row" v-for="(msg, index) in messages" :key="index"
+                    :class="msg.author === 'author' ? 'msg-author' : 'msg-me'">
+                    <div class="msg" :class="'msg-bounce-in-' + (msg.author === 'author' ? 'left': 'right')"
+                        :style="msg.width && msg.height && {width: msg.width - 26 + 'px', height: msg.height - 18 + 'px'}"
+                        v-html="msg.content"></div>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-foot">
+            <div id="prompt">
+                <div id="prompt-head">
+                    <div class="say-something">我想说……</div>
+                    <a href="javascript:;" class="close-btn" v-on:click="togglePrompt(false)"></a>
+                </div>
+                <div id="prompt-body">
+                    <ul class="responses" v-if="lastDialog">
+                        <li v-for="res in lastDialog.responses">
+                            <a href="javascript:;" v-on:click="respond(res)">{{ res.content }}</a>
+                        </li>
+                    </ul>
+                    <div class="next-topic" v-if="!lastDialog || !lastDialog.responses">
+                        <ul class="topics">
+                            <li v-for="topic in nextTopics">
+                                <a href="javascript:;" v-on:click="ask(topic)">{{ topic.brief }}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div id="input-hint" class="say-something" v-on:click="togglePrompt(true)"
+                :class="{'clickable': !isTyping }">
+                <span v-if="!isTyping" style="
+                    color: palevioletred;
+                    font-weight: 900;
+                    padding: 6px 52px;
+                    border-radius: 6px;
+                    background-color: rgba(216, 112, 147, 0.3); ">
+                    我想说……</span>
+                <span v-if="isTyping">小晋同学 正在输入中</span>
+            </div>
+        </div>
+        <div id="prompt-bg" v-on:click="togglePrompt(false)"></div>
+    </div>
+
+    <div class="extra-link" id="meta-link">
+        <a class="letters" href="https://roy-jin.gitee.io/about.html" target="_blank">
+            小晋同学
+        </a>
+    </div>
+
+    <script src="//cdn.bootcss.com/zepto/1.2.0/zepto.min.js"></script>
+    <script src="//cdn.bootcss.com/vue/2.2.6/vue.min.js"></script>
+
+    <script src="./js/index-min.js"></script>
+    <!-- 导入 love/doc/date.js -->
+    <script src="../love/doc/date.js"></script>
+    <script>loveDate.Run(); // 开始展示时间 </script>
+</body>
+
+</html>

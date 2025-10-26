@@ -1,0 +1,99 @@
+{
+  "fromMe": [
+    {
+      "id": "0000",
+      "details": [
+        [
+          "<b>💐💐💐情人节快乐💐💐💐</b>",
+          "我的宝贝<b> Yu-Qian </b>😘",
+          "🌹🌹🌹送你花花🌹🌹🌹",
+          "十几日未见📅",
+          "十分想念😘",
+          "一场全国性的假期<img src='img/hanjia.jpg'>",
+          "让咱们不得不来一场异地恋😂",
+          "让我们变成牛郎织女😶<img src='img/separate.jpeg'>",
+          "稍等一下🙂<br/>让我数数...",
+          "我们一共在一起了 <b id='love-D'>多少天？</b>",
+          "跟你在一起的每一天📅",
+          "都让我感到十分想念📬",
+          "想念你的笑容😀",
+          "想念与你的聊天💬",
+          "想念与你一起在校的时候",
+          "想念，想念......",
+          "你想念我吗？"
+        ]
+      ],
+      "responses": [
+        {
+          "content": "我也想你~",
+          "nextAuthor": [
+            "0001"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "0001",
+      "details": [
+        [
+          "真的吗？那太棒了！",
+          "<img src='img/kiss-my-princess.png'>",
+          "宝贝我好开心呀😁",
+          "今后每一天的相见😍",
+          "你都是我的初恋😘",
+          "宝，我爱你😘"
+        ]
+      ],
+      "responses": [
+        {
+          "content": "我也爱你~",
+          "nextAuthor": [
+            "0002"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "0002",
+      "details": [
+        [
+          "我希望，我们永远在一起，永不分离💑<img src='img/with.jpg'>"
+        ]
+      ],
+      "responses": [
+        {
+          "content": "永不分离~",
+          "nextAuthor": [
+            "0003"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "0003",
+      "details": [
+        [
+          "<a href='https://roy-jin.gitee.io/demo/love'>[Love With Love]<br/><b> 爱永无止尽🔗🔗 </b></a>",
+          "对话🗨已结束~"
+        ]
+      ],
+      "responses": [
+        {
+          "content": "最后的彩蛋",
+          "nextAuthor": [
+            "0004"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "0004",
+      "details": [
+        [
+          "<img src='img/marry-me.png' onload='setTimeout(function(){window.location = `https://roy-jin.gitee.io/demo/love/`;}, 520)'></img>"
+        ]
+      ]
+    }
+  ],
+  "fromUser": []
+}

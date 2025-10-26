@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link rel="stylesheet" href="./doc/style.css">
+    <link rel="shortcut icon" href="/icon/favicon.ico">
+    <meta name="description" content="祝您：新年快乐~">
+    <meta name="keywords" content="happy new year, roy-jin, 新年快乐">
+    <title>Happy New Year!</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="year" id="year">20</div>
+        <div class="greetings" id="text">祝：新年快乐~/身体健康，万事如意！</div>
+    </div>
+    <footer id="info">点击屏幕有惊喜！ ——技术提供：Roy-Jin(QQ：724011786 )</footer>
+    <audio loop="loop" src="./doc/firework.mp3 " id="audio1"></audio>
+    <audio loop="loop" src="./doc/firework-2.mp3 " id="audio2"></audio>
+
+    <script>
+        // 获取页面参数
+        var params = new URLSearchParams(window.location.search);
+
+
+        function typingEffect(textElement, delay) {
+            /** 打字效果的函数
+             * textElement：要添加打字效果的 HTML 元素
+             * delay：每个字符出现的延迟时间（以毫秒为单位） **/
+            const text = textElement.innerHTML;
+            let index = 0;
+            textElement.innerHTML = '';
+
+            function type() {
+                if (index < text.length) {
+                    if (text.charAt(index) == '/') {
+                        textElement.innerHTML += '<br />';
+                    } else {
+                        textElement.innerHTML += text.charAt(index);
+                    }
+                    index++;
+                    setTimeout(type, delay);
+                }
+            }
+
+            type();
+        }
+
+        function init() {
+            // 判断是否有参数(参数‘y’|‘year’要为两位数) 获取当前年份,显示在 DOM 里
+            if (params.get('y') && params.get('y').length == 2 || params.get('year') && params.get('year').length == 2) {
+                document.getElementById('year').innerText += params.get('y') || params.get('year');
+            } else {
+                setInterval(
+                    function () {
+                        const date = new Date();
+                        const year = date.getFullYear();
+                        document.getElementById('year').innerText = year;
+                        console.log(year);
+                    },
+                    1000
+                );
+            }; typingEffect(document.getElementById('year'), 350)
+
+            // 判断是否有参数(参数‘t’|‘text’) 获取文本内容,显示在 DOM 里
+            if (params.get('t') || params.get('text')) {
+                document.getElementById('text').innerHTML = params.get('t') || params.get('text');
+                console.log("Text:", document.getElementById('text').innerHTML);
+            }; typingEffect(document.getElementById('text'), 200);
+
+            // 页脚
+            typingEffect(document.getElementById('info'), 50);
+
+            // 播放烟花音效
+            setTimeout(() => {
+                document.getElementById('audio1').play();
+                document.getElementById('audio2').play();
+                document.getElementById('audio1').volume = 0.3;
+                document.getElementById('audio2').volume = 0.3;
+            }, 500);
+            document.body.addEventListener('mousedown', function (e) {
+                document.getElementById('audio2').play();
+                setTimeout("document.getElementById('audio1').play()", 1500)
+            })
+
+        }
+
+        init(); // 初始化
+
+    </script>
+    <!-- JS文件 -->
+    <script src="./doc/vector.js"></script>
+    <script src="./doc/fireworks.js"></script>
+
+</body>
+
+</html>

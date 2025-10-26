@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-Scalable=0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>登录 login</title>
+</head>
+
+<body>
+    <style>
+        body {
+            user-select: none;
+            -webkit-tap-highlight-color: rgba(255, 255, 255, 0.2);
+            font-family: Arial, sans-serif;
+            padding: 0;
+            margin: 0;
+        }
+
+        .container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100vw;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #222;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            border: 2px solid green;
+            border-radius: 10px;
+            font-size: 16px;
+            margin-bottom: 15px;
+            background: #222;
+            color: #ccc;
+            text-align: center;
+            outline: none;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+    <div class="container">
+        <h1 name="Title">欢迎进入本聊天室</h1>
+        <form>
+            <input type="text" id="username" placeholder="想一个好听一点的名字吧~" required>
+            <input type="submit" value="完成" id="btn">
+        </form>
+    </div>
+
+    <script>
+        const form = document.querySelector('form');
+        const usernameInput = document.getElementById('username');
+        const Btn = document.getElementById('btn');
+        let username = localStorage.getItem('username');
+        let Timer;
+
+        function To() {
+            console.log('已跳转至：', window.location.href = 'PeerTest.html?name=' + username);
+        }
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            username = usernameInput.value.trim();
+            localStorage.setItem('username', username);
+            console.log(`欢迎你，${username}！`); To();
+        });
+
+        form.addEventListener('input', (event) => {
+            document.title = "欢迎您," + usernameInput.value.trim();
+        })
+
+        usernameInput.addEventListener('focus', (event) => {
+            event.preventDefault();
+            clearInterval(Timer);
+            Btn.value = '完成';
+        })
+
+        if (username) {
+            console.log(`欢迎回来，${username}！`);
+            document.title = "欢迎回来," + username;
+            usernameInput.value = username;
+            let T = 3;
+            Btn.value = T + "s";
+            Timer = setInterval(() => {
+                T--; Btn.value = T + "s";
+                if (T == 0) { clearInterval(Timer); To(); }
+            }, 1000);
+        }
+    </script>
+</body>
+
+</html>

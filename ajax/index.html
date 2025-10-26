@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width" />
+    <link href="https://cdn.jsdelivr.net/npm/highlight.js@11.10.0/styles/vs2015.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+    <script type="module" src="./main.js" defer></script>
+    <title>Ajax - XHR & Fetch</title>
+</head>
+
+<body>
+    <h1 class="title">Ajax</h1>
+    <div class="container">
+        <div class="card">
+            <h2 class="card-title">1. XMLHttpRequest API</h2>
+            <progress id="XHR_PROGRESS" value="0" max="100"></progress>
+            <div class="card-content">
+                <button id="SEND_XHR_REQUEST">发送XHR请求</button>
+                <span id="XHR_STATUS"></span>
+            </div>
+        </div>
+        <div class="card">
+            <h2 class="card-title">2. Fetch API</h2>
+            <small><i>我并不推荐使用此API创建进度条。</i></small>
+            <progress id="FETCH_PROGRESS" value="0" max="100"></progress>
+            <div class="card-content">
+                <button id="SEND_FETCH_REQUEST">发送Fetch请求</button>
+                <span id="FETCH_STATUS"></span>
+            </div>
+        </div>
+        <div class="card">
+            <h2 class="card-title">3. 结果</h2>
+            <div class="card-content">
+                <pre id="RESPONSE_CONTAINER" contenteditable></pre>
+            </div>
+        </div>
+        <div class="card">
+            <h2 class="card-title">4. 测试：XHR请求 - 预览大图片示例</h2>
+            <small><i>图片(doc\img.png)有点大(~28MB)请耐心等待。</i></small>
+            <progress id="TEST_PROGRESS" value="0" max="100"></progress>
+            <div class="card-content">
+                <button id="SEND_TEST_REQUEST">发送测试请求</button>
+                <span id="TEST_STATUS"></span>
+            </div>
+            <div class="card-footer">
+                <!-- 这里先显示缩略图，等图片加载完成后再显示原图 -->
+                <img id="TEST_IMAGE" src="./doc/img_min.png"/>
+            </div>
+        </div>
+</body>
+
+</html>

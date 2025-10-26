@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>吃豆人(Roy制作)</title>
+    <link rel="stylesheet" href="css/Pac-Man-index.css">
+</head>
+
+<body>
+    <div id="container">
+        <h1>Pac-Man（吃豆人）</h1>
+        <p><b style="font-size: 120%">游戏介绍：</b>躲避敌人，吃掉更多的豆豆，获取更多的分数吧！</p>
+        <h2>请选择游戏模式：</h2>
+        <div>
+            <div onclick="start('1')"><a class="btn">单人游戏</a></div>
+            <div class="dropdown">
+                <a class="btn" id="multiplayer-toggle">双人游戏</a>
+                <div class="dropdown-content" id="dropdown-content">
+                    <a class="btn" onclick="start('2')">猎人模式</a>
+                    <a class="btn" onclick="start('3')">合作模式</a>
+                    <a class="btn" onclick="start('0')">竞技模式</a>
+                </div>
+            </div>
+        </div>
+        <div>
+            <label class="MODE">
+                <input type="radio" name="MODE" value="Easy">
+                <span>简单模式</span>
+            </label>
+
+            <label class="MODE">
+                <input type="radio" name="MODE" value="Normal" checked>
+                <span>普通模式</span>
+            </label>
+
+            <label class="MODE">
+                <input type="radio" name="MODE" value="Difficult">
+                <span>困难模式</span>
+            </label>
+        </div>
+    </div>
+
+    <div class="setting">
+        <div class="setting-toggle">&#9881;</div>
+        <div class="setting-content" id="setting-content">
+            <h2>设置面板</h2>
+            <h3>按键说明：
+                <p style="color: brown;">Alt+F4：退出游戏<br />Back：返回主页</p>
+                <h4>P1玩家按键：</h4>
+                <p style="font-size: 50%;">
+                <p>W/A/D：玩家移动</p>
+                <p>J：兑换空中跳跃次数</p>
+                <p>K：兑换分数</p>
+                <p>空格：空中跳跃</p>
+                </p>
+                <h4>P2玩家按键：</h4>
+                <p style="font-size: 50%;">
+                <p>⬆/⬅/➡：玩家移动</p>
+                <p>➕：兑换空中跳跃次数</p>
+                <p>➖：兑换分数</p>
+                <p>0：空中跳跃</p>
+                </p>
+            </h3>
+
+            <div class="volume-slider">
+                <label for="volume"><b>音量设置：<b><b id="volumeValue">Null</b>%</label>
+                <input type="range" min="0" max="100" value="50" id="volumeSlider">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let MODE = "Normal";
+        var radios = document.getElementsByName('MODE');
+
+        for (var i = 0; i < radios.length; i++) {
+            radios[i].addEventListener('change', function () {
+                songsRun('songs/7.mp3');
+                if (this.checked) {
+                    MODE = this.value;
+                    console.log("选择的模式：" + this.value);
+                }
+            });
+        }
+
+        function start(a) {
+            songsRun('songs/6.mp3', Volume + 0.5);
+            setTimeout(() => {
+                location.replace(`html/Game_Pac_Man.html?method=${a}&mode=${MODE}`);
+            }, 800);
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 200);
+        });
+
+        // 游戏交互
+        var multiplayerToggle = document.getElementById('multiplayer-toggle');
+        var DC = false;
+        var dropdownContentById = document.getElementById('dropdown-content');
+        multiplayerToggle.addEventListener('click', function () {
+            songsRun('songs/7.mp3');
+            if (!DC) {
+                dropdownContentById.style.height = '52px';
+                dropdownContentById.style.padding = '5px';
+            } else {
+                dropdownContentById.style.height = '0px';
+                dropdownContentById.style.padding = '0px';
+            }
+            DC = !DC;
+        });
+
+        // 设置面板交互
+        var settingToggle = document.querySelector('.setting-toggle');
+        var SC = false;
+        var settingContentById = document.getElementById('setting-content');
+
+        settingToggle.addEventListener('click', function () {
+            songsRun('songs/7.mp3');
+            if (!SC) {
+                settingContentById.style.height = '623px';
+                settingContentById.style.padding = '10px';
+            } else {
+                settingContentById.style.height = '0px';
+                settingContentById.style.padding = '0px';
+            }
+            SC = !SC;
+            // clearTimeout(Timeout);
+            // if (settingContent.style.opacity === '1') {
+            //     settingContent.style.opacity = '0';
+            //     Timeout = setTimeout(() => {
+            //         settingContent.style.display = 'none';
+            //     }, 400)
+            // } else {
+            //     settingContent.style.display = 'block';
+            //     Timeout = setTimeout(() => {
+            //         settingContent.style.opacity = '1';
+            //     }, 10);
+            // }
+        });
+
+        //音量设置
+        if (!localStorage.getItem('Volume')) {
+            localStorage.setItem('Volume', 0.5);
+        } else {
+            document.querySelector("#volumeSlider").value = localStorage.getItem('Volume') * 100;
+            document.querySelector('#volumeValue').innerHTML = localStorage.getItem('Volume') * 100;
+        }
+        document.querySelector("#volumeSlider").addEventListener('input', function () {
+            document.querySelector('#volumeValue').innerHTML = this.value;
+            localStorage.setItem('Volume', this.value / 100);
+            Volume = parseFloat(localStorage.getItem('Volume'));
+            songsRun('songs/2.mp3')
+        })
+    </script>
+    <script src="js/Game_songs.js"></script>
+</body>
+
+</html> 

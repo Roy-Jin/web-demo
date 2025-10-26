@@ -1,0 +1,104 @@
+:root {
+    /* Color Palette */
+    --primary-color: #007bff;
+    --secondary-color: #6c757d;
+    --success-color: #28a745;
+    --info-color: #17a2b8;
+    --warning-color: #ffc107;
+    --danger-color: #dc3545;
+    --light-color: #f8f9fa;
+    --dark-color: #343a40;
+    --white-color: #fff;
+    --black-color: #000;
+    --selection-color: #499981;
+    --progress-color: #dbdbdb;
+    --scrollbar-thumb-color: #99999925;
+
+    /* Font Families */
+    --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    --font-size-base: 1rem;
+
+    /* Border Radius */
+    --border-radius: 0.25rem;
+
+    /* Transition */
+    --transition: 0.2s ease-in-out;
+}
+
+*,
+*::before,
+*::after {
+    transition: all var(--transition);
+    box-sizing: border-box;
+    outline: none;
+    padding: 0;
+    margin: 0;
+}
+
+::selection {
+    color: var(--light-color);
+    background-color: var(--selection-color);
+}
+
+body {
+    line-height: 1.5;
+    user-select: none;
+    transition: all var(--transition);
+    color: var(--light-color);
+    background-color: var(--dark-color);
+    font-size: var(--font-size-base);
+    font-family: var(--font-family-sans-serif);
+}
+
+info {
+    color: var(--info-color);
+}
+
+success {
+    display: block;
+    text-align: end;
+    color: var(--success-color);
+}
+
+warning {
+    color: var(--warning-color);
+}
+
+danger {
+    color: var(--danger-color);
+}
+    
+
+button,input {
+    padding: 0.5rem;
+    border-radius: var(--border-radius);
+    color: var(--light-color);
+    background-color: var(--dark-color);
+    border: 1px solid var(--secondary-color);
+}
+
+button:hover {
+    cursor: pointer;
+    color: var(--warning-color);
+    border: 1px solid var(--warning-color);
+}
+
+progress {
+    width: 100%;
+    height: 1rem;
+    appearance: none;
+    overflow: hidden;
+    border-radius: .5rem;
+    background-color: transparent;
+}
+
+progress::-webkit-progress-bar {
+    background-color: var(--progress-color);
+}
+
+progress::-webkit-progress-value {
+    background-color: var(--success-color);
+    border-radius: .5rem;
+    transition: width 0.3s linear;
+}

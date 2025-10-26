@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width" />
+    <script
+        src="https://cdn.jsdelivr.net/combine/npm/jquery,npm/jquery.terminal/js/jquery.terminal.min.js,npm/jquery.terminal/js/xml_formatting.js,npm/js-polyfills/keyboard.js,npm/prismjs/prism.min.js,npm/jquery.terminal/js/prism.js,npm/jquery.splitter/js/jquery.splitter.min.js"></script>
+    <link
+        href="https://cdn.jsdelivr.net/combine/npm/terminal-prism/css/prism-coy.css,npm/jquery.terminal/css/jquery.terminal.min.css,npm/jquery.splitter/css/jquery.splitter.css"
+        rel="stylesheet" />
+    <style>
+        .terminal {
+            --color: #fff;
+            --background: #1f1f1f;
+            --animation: terminal-bar;
+            --size: 1.3;
+            --font: 'Fira Code', 'Consolas', 'Courier New', monospace;
+            padding: 2rem;
+        }
+
+        @media screen and (max-width: 768px) {
+            .terminal {
+                padding: .3rem;
+                --size: 1;
+            }
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        dialog {
+            width: 100vw;
+            height: 100vh;
+            border: none;
+            overflow: hidden;
+            background: #1f1f1f;
+        }
+
+        dialog iframe {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+    <title>JSTerm</title>
+</head>
+
+<body>
+    <script>
+        var __EVAL = (s) => eval(`void (__EVAL = ${__EVAL}); ${s}`);
+        var __QUIT = () => { const broadcastChannel = new BroadcastChannel('jsterm'); broadcastChannel.postMessage('quit'); };
+
+        function repr(object) {
+            if (object) {
+                if (object instanceof $.fn.init) {
+                    return '#&lt;jQuery&gt;';
+                } else if (typeof object === 'object') {
+                    return object.toString();
+                } else {
+                    return new String(object);
+                }
+            } else if (object === null) {
+                return 'null';
+            }
+        }
+        function repl(fn) {
+            return function (code) {
+                if (code !== '') {
+                    try {
+                        var result = fn(code);
+                        if (result) {
+                            this.echo(repr(result));
+                        }
+                    } catch (e) {
+                        this.error(new String(e));
+                    }
+                }
+            };
+        }
+
+        var quit = () => __QUIT();
+
+        var term = $('body').terminal(repl((code) => __EVAL(code)), {
+            greetings: 'Welcome to javascript interpreter! Please enter "quit()" to exit.',
+            prompt: 'JavaScript> ',
+            name: 'js'
+        });
+        $.terminal.syntax('javascript');
+    </script>
+</body>
+
+</html>

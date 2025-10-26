@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>曼波（哈基米）音乐播放器</title>
+
+    <!-- 网站图标 -->
+    <link rel="icon" href="https://rj-cloud.pages.dev/ForMe/avatar-nobg.png" type="image/png">
+    <link rel="shortcut icon" href="https://rj-cloud.pages.dev/ForMe/avatar.ico" type="image/x-icon">
+
+    <!-- SEO 优化 -->
+    <meta name="author" content="Roy-Jin">
+    <meta name="keywords" content="哈基米, 曼波, 音乐播放器, 音乐">
+
+    <link rel="stylesheet" href="/style/index.css">
+
+</head>
+
+<body>
+    <div id="aplayer"></div>
+    <div class="body">
+        <div id="cover"></div>
+        <div class="info">
+            <h1 id="name">Music Name</h1>
+            <p id="author">Music Singer</p>
+            <h4 id="lrc">Music Lyrics</h4>
+            <div class="processBar">
+                <input type="range" id="slider" value="0">
+                <div class="time-show">
+                    <p class="current">--:--</p>
+                    <p class="duration">--:--</p>
+                </div>
+            </div>
+            <div class="controller">
+                <div id="modes" class="fas fa-random"></div>
+                <div id="skipBack" class="fas fa-backward-step"></div>
+                <div id="playPause" class="fas fa-play"></div>
+                <div id="skipForward" class="fas fa-forward-step"></div>
+                <div id="list" class="fas fa-list"></div>
+            </div>
+        </div>
+    </div>
+    <a class="project-info" href="https://github.com/Roy-Jin/MB-Music">已开源在GitHub：Roy-Jin/MB-Music</a>
+</body>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/aplayer/1.10.1/APlayer.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/color-thief/2.6.0/color-thief.min.js"></script>
+<script type="module" src="/script/index.js"></script>
+
+</html>

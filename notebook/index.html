@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0" />
+    <title>书📕</title>
+    <link rel="stylesheet" href="./Demo.css">
+</head>
+
+<body>
+    <div class="main">
+        <div class="book" id="book">
+            <div class="cover" id="cover">
+                <span>笔记本</span>
+            </div>
+            <iframe class="content" id="Book-Body" frameborder="0"></iframe>
+            <div class="Btns">
+                <button id="Previous" hidden>◀</button><button id="Next">▶</button>
+                <button id="full">▢</button>
+                <p id="PagesCount">0/0</p>
+            </div>
+        </div>
+        <div style="position: fixed;bottom: 0;font-size: xx-small;">制作：Roy-jin(Github)</div>
+    </div>
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="./Script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,11 @@
+* {
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+#mobile-body-bg {
+    filter: blur(5px);
+    backdrop-filter: blur(5px);
+    background-color: #eee;
+}

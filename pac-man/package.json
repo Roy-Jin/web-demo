@@ -1,0 +1,40 @@
+{
+  "name": "roy-pac-man",
+  "version": "0.0.5",
+  "description": "Pac-Man-Game for Roy",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "package": "electron-builder"
+  },
+  "build": {
+    "appId": "com.roy.pacman",
+    "productName": "Pac-Man",
+    "copyright":"© 2023 Roy, All rights reserved.",
+    "directories": {
+      "output": "C:/Users/Administrator/Desktop/Pac-Man/Pac-Man-0.0.5-需修改"
+    },
+    "win": {
+      "icon": "icons/i.ico"
+    },
+    "files": [
+      "**/*"
+    ],
+    "nsis": {
+      "oneClick": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "icons/i.ico",
+      "uninstallerIcon": "icons/u.ico",
+      "installerHeaderIcon": "icons/i.ico",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Pac-Man"
+    }
+  },
+  "author": "Roy",
+  "devDependencies": {
+    "electron": "^26.0.0",
+    "electron-builder": "^24.6.3"
+  }
+}

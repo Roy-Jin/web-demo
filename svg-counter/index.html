@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width" />
+    <title>SVG Counter</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-size: 16px;
+            user-select: none;
+            text-align: center;
+        }
+
+        body {
+            background-color: #f9f9f9;
+            display: flex;
+            height: 100vh;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #4CAF50;
+        }
+
+        input {
+            width: 60%;
+            padding: 10px;
+            border: 2px solid #4CAF50;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #81C784;
+        }
+
+        #output {
+            width: 60%;
+            height: 300px;
+            padding: 20px;
+            margin: 80px;
+            border: 2px solid #81C784;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>SVG Counter - 基于SVG的数字动画计数器</h1>
+    <input type="number" id="input" step="1" value="0123456789"/>
+    <input type="text" id="Theme" value="booru-lewd/*.gif" />
+    <div id="output"></div>
+</body>
+
+<script type="module">
+    import SVGCounter from "./assets/doc/svg-counter.js";
+
+    const counter = new SVGCounter("#output", {});
+
+    document.getElementById("input").addEventListener("input", () => {
+        counter.setSVG(Math.abs(document.getElementById("input").value));
+    })
+
+    document.getElementById("Theme").addEventListener("input", () => {
+        counter.setTheme("assets/theme/" + (document.getElementById("Theme").value || "booru-lewd/*.gif"));
+    })
+
+    counter.setSVG(document.getElementById("input").value);
+</script>
+
+</html>

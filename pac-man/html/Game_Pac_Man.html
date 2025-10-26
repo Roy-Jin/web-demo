@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>吃豆人(Roy制作)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" href="../css/Pac-Man-game.css">
+</head>
+
+<body>
+
+    <main>
+        <canvas id="gameCanvas"></canvas>
+        <div id="scoreDiv" class="a">
+            <div id="method-0" style="display: none;">
+                <div style="color: skyblue;">Player1 Score: <b id="score">0</b></div>
+                <div style="color: skyblue;">Player1 Air-Jump-Num: <b id="jumpNum" style="color: cadetblue;">3</b></div>
+                <br />
+                <div style="color: pink;">Player2 Score: <b id="score_2">0</b></div>
+                <div style="color: pink;">Player2 Air-Jump-Num: <b id="jumpNum_2" style="color: cadetblue;">3</b></div>
+            </div>
+
+            <div id="method-1" style="display: none;">
+                <div>The Score: <b id="score">0</b></div>
+                <div>The Air-Jump-Num: <b id="jumpNum" style="color: cadetblue;">3</b></div>
+                <div>The Highest-Score: <b id="HSDiv">null</b></div>
+            </div>
+
+            <div id="method-2&3" style="display: none;">
+                <div>The Score: <b id="score">0</b></div>
+                <!-- <div>The Air-Jump-Num: <b id="jumpNum" style="color: cadetblue;">3</b></div> -->
+                <div style="color: skyblue;">Player1 Air-Jump-Num: <b id="jumpNum" style="color: cadetblue;">3</b></div>
+                <div style="color: pink;display: none;" id="jumNum_2Div">Player2 Air-Jump-Num: <b id="jumpNum_2" style="color: cadetblue;">3</b></div>
+            </div>
+
+
+            <select id="MODE">
+                <option value="Easy">Easy</option>
+                <option value="Normal" selected>Normal</option>
+                <option value="Difficult">Difficult</option>
+            </select>
+        </div>
+    </main>
+
+    <script src="../js/Game_script.js"></script>
+    <script src="../js/Game_scene.js"></script>
+    <script src="../js/Game_players.js"></script>
+    <script src="../js/Game_Loop.js"></script>
+    <script src="../js/Game_beans.js"></script>
+    <script src="../js/Game_enemy.js"></script>
+    <script src="../js/Game_songs.js"></script>
+    <script src="../js/Game_keys.js"></script>
+</body>
+
+</html>

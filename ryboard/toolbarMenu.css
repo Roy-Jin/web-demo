@@ -1,0 +1,172 @@
+/* toolbar menu style */
+.toolbarMenu {
+    height: 0;
+    width: 100%;
+    position: fixed;
+    bottom: 55px;
+    left: 0;
+    user-select: none;
+    z-index: 11;
+    display: flex;
+    justify-content: center;
+}
+
+[class^="toolbarMenu-"] {
+    bottom: 0;
+    height: auto;
+    background: #fff;
+    box-shadow: 0 0 5px 0px #333;
+    border-radius: 10px;
+    pointer-events: none;
+    opacity: 0;
+    transition: all 0.2s linear;
+    pointer-events: none;
+    animation-fill-mode: forwards;
+    animation: fadeLogOut 0.4s;
+    position: absolute;
+    overflow: hidden;
+    padding: 5px;
+}
+
+[class^="toolbarMenu-"].active {
+    pointer-events: all;
+    opacity: 1;
+    animation-fill-mode: forwards;
+    animation: fadeLogIn 0.3s;
+}
+
+/* pen toolbar menu style */
+.width-viewer {
+    height: 200px;
+    width: 50px;
+    float: left;
+}
+
+.switcher-container {
+    height: 200px;
+    float: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.switcher-container[type="width"] {
+    width: 50px;
+}
+
+.switcher-container [class^="width-switcher-"] {
+    height: 25px;
+    width: 25px;
+    border-radius: 100%;
+    border: 2px solid rgba(179, 179, 179, 0.8);
+    box-shadow: 0 0 0px 3px transparent;
+    transition: box-shadow 0.1s ease-out;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.switcher-container [class^="width-switcher-"]:hover {
+    box-shadow: 0 0 0px 3px rgba(221, 221, 221, 0.8);
+}
+
+.switcher-container [class^="width-switcher-"].active {
+    box-shadow: 0 0 0px 3px rgba(221, 221, 221, 0.8);
+}
+
+.switcher-container [class^="width-switcher-"] span {
+    background: #000;
+    display: block;
+    border-radius: 100%;
+}
+
+.switcher-container .width-switcher-4 span {
+    height: 13px;
+    width: 13px;
+}
+
+.switcher-container .width-switcher-3 span {
+    height: 11px;
+    width: 11px;
+}
+
+.switcher-container .width-switcher-2 span {
+    height: 9px;
+    width: 9px;
+}
+
+.switcher-container .width-switcher-1 span {
+    height: 5px;
+    width: 5px;
+}
+
+.switcher-container[type="color"] {
+    width: 150px;
+    flex-flow: column wrap;
+}
+
+.switcher-container .color-switcher {
+    height: 25px;
+    width: 25px;
+    border-radius: 100%;
+    border: 2px solid rgba(179, 179, 179, 0.8);
+    box-shadow: 0 0 0px 3px transparent;
+    transition: box-shadow 0.1s ease-out;
+    cursor: pointer;
+    flex-shrink: 0;
+    background-color: white;
+    margin: 10px 10px;
+}
+
+.switcher-container .color-switcher:hover {
+    box-shadow: 0 0 0px 3px rgba(221, 221, 221, 0.8);
+}
+
+.switcher-container .color-switcher.active {
+    box-shadow: 0 0 0px 3px rgba(221, 221, 221, 0.8);
+}
+
+/* Eraser toolbar menu style */
+.toolbarMenu-eraser {
+    padding: 0;
+}
+
+.toolbarMenu-eraser p {
+    cursor: pointer;
+    height: 45px;
+    margin: 0;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff;
+    transition: background-color 0.1s ease-out;
+}
+
+.toolbarMenu-eraser p img {
+    float: left;
+    margin-right: 7px;
+    transform: scale(0.8);
+}
+
+/* Animations */
+@keyframes fadeLogIn {
+    0% {
+        transform: translate3d(0, 80px, 0) scale(0.7);
+    }
+
+    100% {
+        transform: none;
+    }
+}
+
+@keyframes fadeLogOut {
+    0% {
+        transform: none;
+    }
+
+    100% {
+        transform: translate3d(0, 80px, 0) scale(0.7);
+    }
+}

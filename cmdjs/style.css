@@ -1,0 +1,113 @@
+* {
+    margin: 0;
+    padding: 0;
+    outline: none;
+    box-sizing: border-box;
+    -webkit-user-drag: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+    background-color: #f6f6f6aa;
+    color: #111;
+}
+
+body {
+    display: flex;
+    height: 100vh;
+    align-items: center;
+    flex-direction: column;
+    background-color: #111;
+    justify-content: center;
+    
+}
+
+#Header {
+    padding: 3px;
+    min-width: 50%;
+    color: #f6f6f6;
+    font-size: 0.8rem;
+    user-select: none;
+    text-align: center;
+    border-bottom: #444 solid 1px;
+}
+
+#Output {
+    margin: 0;
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    resize: none;
+    color: #f6f6f6;
+    overflow-y: scroll;
+    font-family: Consolas;
+    background-color: #111;
+    scroll-behavior: smooth;
+}
+
+#Output::-webkit-scrollbar {
+    width: 8px;
+}
+
+#Output::-webkit-scrollbar-thumb {
+    background-color: #99999988;
+    border-radius: 8px;
+}
+
+#Output::-webkit-scrollbar-track {
+    background-color: #33333355;
+    border-radius: 8px;
+}
+
+#Output div {
+    overflow: hidden;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    margin-bottom: 0.5rem;
+    transition: all 0.1s ease-in-out;
+}
+
+#Output error {
+    color: #ff7272;
+}
+
+#Output success {
+    color: #90ff90;
+}
+
+#Output warning {
+    color: #ffcc00;
+}
+
+#Output info {
+    color: #648dcc;
+}
+
+#Output code {
+    color: #f6f6f6;
+    padding: 2px 4px;
+    user-select: all;
+    font-size: 0.9rem;
+    border-radius: 3px;
+    background-color: #444;
+}
+
+#Input {
+    width: 16rem;
+    margin: 5px;
+    height: 40px;
+    border: none;
+    padding: 10px;
+    color: #f6f6f6;
+    font-size: 1.2rem;
+    text-align: center;
+    border-radius: 5px;
+    background-color: #444;
+    transition: all 0.3s ease-in-out;
+}
+
+#Input:focus {
+    width: 99%;
+    text-align: left;
+}
