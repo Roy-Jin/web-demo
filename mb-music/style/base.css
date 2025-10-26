@@ -23,12 +23,12 @@
 
 @font-face {
     font-family: "仓耳渔阳体";
-    src: url("/fonts/仓耳渔阳体W03.ttf");
+    src: url("../fonts/仓耳渔阳体W03.ttf");
 }
 
 @font-face {
     font-family: "Electrolize";
-    src: url("/fonts/Electrolize-Regular.woff2");
+    src: url("../fonts/Electrolize-Regular.ttf");
 }
 
 * {

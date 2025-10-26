@@ -8,9 +8,10 @@ document.getElementById("SEND_XHR_REQUEST").onclick = function (btn) {
     SEND_XHR_REQUEST({
         url: './doc/xhr.js',
         onprogress: (event) => {
+            const percent = event.percent !== Infinity ? event.percent : 100;
             document.getElementById('XHR_PROGRESS').style.setProperty('--success-color', '#28a745');
-            document.getElementById('XHR_PROGRESS').value = event.percent;
-            document.getElementById('XHR_STATUS').innerHTML = `<info>已加载 ${event.percent} %</info>`;
+            document.getElementById('XHR_PROGRESS').value = percent;
+            document.getElementById('XHR_STATUS').innerHTML = `<info>已加载 ${percent} %</info>`;
         },
         onload: (event) => {
             btn.target.disabled = false;
@@ -34,8 +35,9 @@ document.getElementById("SEND_FETCH_REQUEST").onclick = function (btn) {
     SEND_FETCH_REQUEST({
         url: './doc/fetch.js',
         onprogress: (event) => {
-            document.getElementById('FETCH_PROGRESS').value = event.percent;
-            document.getElementById('FETCH_STATUS').innerHTML = `<info>已加载 ${event.percent} %</info>`;
+            const percent = event.percent !== Infinity ? event.percent : 100;
+            document.getElementById('FETCH_PROGRESS').value = percent;
+            document.getElementById('FETCH_STATUS').innerHTML = `<info>已加载 ${percent} %</info>`;
         },
         onload: (event) => {
             btn.target.disabled = false;

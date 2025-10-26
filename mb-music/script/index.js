@@ -128,7 +128,7 @@ let update = {
             });
 
         if (PicUrl) {
-            const img = new Image();
+            let img = new Image();
             img.src = PicUrl;
             img.onload = () => {
                 ap.list.audios[index].pic = PicUrl;

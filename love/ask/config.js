@@ -17,5 +17,5 @@ const CONFIG = {
     你的出现，让我找到了生命的意义，让我感受到了爱的力量。
     你是我生命中的礼物，我会用我一生的时间去珍惜你，去爱你。`,
     btnAccept: '(´▽`ʃ♡ƪ)',
-    messLink: '../love_say/'
+    messLink: '../say/'
 }

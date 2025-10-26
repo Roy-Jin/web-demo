@@ -9,7 +9,7 @@ async function scanDirectory(dirPath) {
   
   const items = await readdir(dirPath);
   for (const item of items) {
-    const ignore = [".git", "node_modules", ".gitignore", ".nojekyll", "package.json", "package-lock.json", "404.html", "main.js"];
+    const ignore = [".git", "node_modules", ".gitignore", ".nojekyll", "package.json", "package-lock.json", "404.html", "main.js", "LICENSE", "README.md", "love"];
     if (ignore.includes(item)) continue;
 
     const fullPath = path.join(dirPath, item);

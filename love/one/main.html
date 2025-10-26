@@ -11,38 +11,49 @@
     <div class="container">
         <header>Love With Love</header>
         <hr color="#9c7a7a" style="width: 100%;">
-        <h3>我们已经在一起了：</h3>
+        <h3></h3>
         <div class="date">
             <span id="love-D"></span><span id="love-H"></span><span id="love-M"></span><span id="love-S"></span>
         </div>
-        <h4 id="Text">
-            <!-- 歌词 by 《Double Take》，有删改 -->
-            我敢说我从未/
-            像那样爱你/
-            在人海茫茫中/
-            在云烟漫漫中/
-            我眼前只有你_别无其他/
-            在我玫瑰漫烂的梦境中/
-            亲爱的_你为何能让我如此陶醉/
-            告诉我_你是否感知到那爱的美妙/
-            无论是盛夏还是寒冬_我们共度一生/
-            让我带你去往你梦中的地方/
-            “我们会是永远的朋友”/
-            星宿闪耀_城墙绘画/
-            你是我的罪过_也是我的缪斯/
-            灵魂伴侣_你是否感受到爱情的魅力？/
-            感受爱的美妙_让我们永远相伴！/
-            —_—_—_The_End_—_—_—
-        </h4>
+        <h4 id="Text"></h4>
     </div>
     <footer id="Now"></footer>
 
-    <!-- 打字效果 ../base/typingEffect.js -->
-    <script src="../base/typingEffect.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.0/typed.min.js"></script>
     <script>
-        // 开始打字
-        typingEffect(document.querySelector('h3'), { delay: 222, outTime: 3000 });
-        typingEffect(document.querySelector('h4'), { delay: 888, outTime: 5200, lineBreak: true });
+        setTimeout(() => {
+            const typed_h3 = new Typed('h3', {
+                strings: ['我们已经在一起了：'],
+                showCursor: false,
+                typeSpeed: 200,
+            })
+        }, 222);
+        setTimeout(() => {
+            const typed_h4 = new Typed('h4', {
+                strings: [
+                    `
+我敢说我从未<br>
+像那样爱你<br>
+在人海茫茫中<br>
+在云烟漫漫中<br>
+我眼前只有你 别无其他<br>
+在我玫瑰漫烂的梦境中<br>
+亲爱的 你为何能让我如此陶醉<br>
+告诉我 你是否感知到那爱的美妙<br>
+无论是盛夏还是寒冬 我们共度一生<br>
+让我带你去往你梦中的地方<br>
+“我们会是永远的朋友”<br>
+星宿闪耀 城墙绘画<br>
+你是我的罪过 也是我的缪斯<br>
+灵魂伴侣 你是否感受到爱情的魅力？<br>
+感受爱的美妙 让我们永远相伴！<br>
+— — — The End — — —
+`
+                ],
+                showCursor: false,
+                typeSpeed: 150,
+            }, 888)
+        });
     </script>
 
     <!-- 引入 ./doc/date.js -->

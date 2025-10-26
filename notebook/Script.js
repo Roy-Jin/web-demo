@@ -1,9 +1,9 @@
 let Book = {
     nowPage: 0,
     Pages: [0,
-        "https://rj-web.pages.dev/RuoYiBoard/",
+        "https://rj-web.pages.dev/ryboard/",
         "https://r-j.pages.dev/",
-        "https://rj-cloud.pages.dev/"
+        "https://rj-web.pages.dev/"
     ],
     full: false
 }

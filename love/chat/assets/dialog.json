@@ -73,7 +73,7 @@
       "id": "0003",
       "details": [
         [
-          "<a href='https://roy-jin.gitee.io/demo/love'>[Love With Love]<br/><b> 爱永无止尽🔗🔗 </b></a>",
+          "<a href='https://rj-web.pages.dev/love/one'>[Love With Love]<br/><b> 爱永无止尽🔗🔗 </b></a>",
           "对话🗨已结束~"
         ]
       ],
@@ -90,7 +90,7 @@
       "id": "0004",
       "details": [
         [
-          "<img src='img/marry-me.png' onload='setTimeout(function(){window.location = `https://roy-jin.gitee.io/demo/love/`;}, 520)'></img>"
+          "<img src='img/marry-me.png' onload='setTimeout(function(){window.location = `https://rj-web.pages.dev/love/one`;}, 520)'></img>"
         ]
       ]
     }
