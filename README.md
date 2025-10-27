@@ -1,4 +1,4 @@
-# Web-DEMO
+<h1 align="center">WEB-DEMO</h1>
 
 A demo repository for learning web development technologies.  
 这是一个用于学习Web开发技术的演示仓库。
