@@ -1,41 +1,107 @@
-const pragma = new URLSearchParams(window.location.search);
+document.addEventListener('DOMContentLoaded', function () {
+    // 获取DOM元素
+    const qrText = document.getElementById('qr-text');
+    const qrSize = document.getElementById('qr-size');
+    const qrColor = document.getElementById('qr-color');
+    const qrBgColor = document.getElementById('qr-bgcolor');
+    const generateBtn = document.getElementById('generate-btn');
+    const downloadBtn = document.getElementById('download-btn');
+    const fullscreenBtn = document.getElementById('fullscreen-btn');
+    const qrcodeContainer = document.getElementById('qrcode');
+    const modal = document.getElementById('modal');
+    const modalQrcode = document.getElementById('modal-qrcode');
+    const closeModal = document.getElementById('close-modal');
 
-function Title(_html, _style) {
-    try { document.getElementById("LOG").remove(); } catch { }
-    var log = document.createElement("p");
-    log.id = "LOG";
-    log.innerHTML = _html ? _html : "";
-    log.style = _style;
-    setTimeout(() => {
-        qrcodeElement.append(log);
-    }, 11);
-}
-document.body.style.background = pragma.get("bg") ? pragma.get("bg") : "#333";
-var qrcodeElement = document.getElementById("qrcode");
-var text;
-var color = pragma.get("color") ? pragma.get("color") : "rgba(221,221,221,.88)";
-var errColor = "rgba(250,50,50,.75)"
-if (pragma.get("text")) { text = pragma.get("text") } else { text = "QRCode: Params Error!"; color = errColor; Title("错误：还没有参数哦~", `color:${errColor}`) }
+    let qrcode = null;
 
-Title(pragma.get("title") ? pragma.get("title") : pragma.get("text"), `color:${color}`);
+    // 生成二维码函数
+    function generateQRCode() {
+        const text = qrText.value.trim();
+        if (!text) {
+            alert('请输入要生成二维码的文本或URL');
+            return;
+        }
 
-var qrcode = new QRCode(qrcodeElement, {
-    text: text,
-    width: 512,
-    height: 512,
-    colorDark: color,
-    colorLight: "transparent",
-    correctLevel: QRCode.CorrectLevel.H
+        // 清除之前的二维码
+        qrcodeContainer.innerHTML = '';
+
+        // 创建新的二维码
+        qrcode = new QRCode(qrcodeContainer, {
+            text: text,
+            width: parseInt(qrSize.value),
+            height: parseInt(qrSize.value),
+            colorDark: qrColor.value,
+            colorLight: qrBgColor.value,
+            correctLevel: QRCode.CorrectLevel.H
+        });
+
+        // 更新提示文本
+        const hint = document.querySelector('.hint');
+        if (hint) {
+            hint.textContent = '二维码已生成';
+        }
+    }
+
+    // 下载二维码函数
+    function downloadQRCode() {
+        if (!qrcode) {
+            alert('请先生成二维码');
+            return;
+        }
+
+        const canvas = qrcodeContainer.querySelector('canvas');
+        if (!canvas) {
+            alert('无法获取二维码图像');
+            return;
+        }
+
+        // 创建下载链接
+        const link = document.createElement('a');
+        link.download = 'qrcode.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+    }
+
+    // 全屏显示二维码
+    function showFullscreenQRCode() {
+        if (!qrcode) {
+            alert('请先生成二维码');
+            return;
+        }
+
+        // 清除模态框中的二维码
+        modalQrcode.innerHTML = '';
+
+        // 创建新的二维码（更大尺寸）
+        const text = qrText.value.trim();
+        new QRCode(modalQrcode, {
+            text: text,
+            width: 400,
+            height: 400,
+            colorDark: qrColor.value,
+            colorLight: qrBgColor.value,
+            correctLevel: QRCode.CorrectLevel.H
+        });
+
+        // 显示模态框
+        modal.style.display = 'flex';
+    }
+
+    // 事件监听
+    generateBtn.addEventListener('click', generateQRCode);
+    downloadBtn.addEventListener('click', downloadQRCode);
+    fullscreenBtn.addEventListener('click', showFullscreenQRCode);
+    closeModal.addEventListener('click', function () {
+        modal.style.display = 'none';
+    });
+
+    // 点击模态框背景关闭
+    modal.addEventListener('click', function (e) {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+
+    // 初始生成一个二维码
+    generateQRCode();
 });
-
-setTimeout(() => {
-    qrcodeElement.style.opacity = 1;
-    qrcodeElement.style.transform = "rotate(0deg) scale(1)";
-}, 100);
-
-// 下载
-function Down() { download(document.querySelector("img").src, document.getElementById("LOG").innerText + ".png") }
-
-// qrcode._htOption; // the QRCode option json
-// qrcode.clear(); // clear the code.
-// qrcode.makeCode("TEXT"); // make another code.

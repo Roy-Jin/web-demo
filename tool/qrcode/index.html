@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 
 <head>
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -8,29 +8,79 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
     <link rel="stylesheet" href="./doc/style.css">
-    <link rel="shortcut icon" href="/icon/favicon.ico">
     <meta name="description" content="QRcode">
-    <meta name="keywords" content="QR, roy-jin, 二维码转换工具">
-    <title>QR Code</title>
+    <meta name="keywords" content="QR, QRcode, Roy-Jin, 二维码生成工具">
+    <title>二维码生成工具</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/qrcodejs/1.0.0/qrcode.js"></script>
 </head>
 
 <body>
-    <main>
-        <h1>QR Code</h1>
-        <div id="qrcode"></div>
-    </main>
+    <div class="container">
+        <h1>二维码生成工具</h1>
 
-    <!-- CDN 引入 downloadjs & qrcodejs -->
-    <script src="https://cdn.bootcdn.net/ajax/libs/downloadjs/1.4.8/download.min.js"></script>
-    <script src="https://cdn.bootcdn.net/ajax/libs/qrcodejs/1.0.0/qrcode.js"></script>
-    <script>
-        if(/Mobi|Android|iPhone/i.test(navigator.userAgent)) {
-            document.querySelector("h1").style.display = "none";
-            console.info("*移动设备*");
-        }
-    </script>
-    <!-- script.js -->
-    <script src="./doc/script.js"></script>
+        <div class="input-group">
+            <label for="qr-text">输入文本或URL：</label>
+            <textarea id="qr-text" placeholder="请输入要生成二维码的文本或URL...">Hello, world!</textarea>
+        </div>
+
+        <div class="options-group">
+            <div class="option">
+                <label for="qr-size">尺寸：</label>
+                <select id="qr-size">
+                    <option value="128">128x128</option>
+                    <option value="200" selected>200x200</option>
+                    <option value="256">256x256</option>
+                    <option value="400">400x400</option>
+                </select>
+            </div>
+
+            <div class="option">
+                <label for="qr-color">颜色：</label>
+                <input type="color" id="qr-color" value="#000000">
+            </div>
+
+            <div class="option">
+                <label for="qr-bgcolor">背景色：</label>
+                <input type="color" id="qr-bgcolor" value="#ffffff">
+            </div>
+        </div>
+
+        <button class="generate-btn" id="generate-btn">生成二维码</button>
+
+        <div class="qrcode-container">
+            <div id="qrcode"></div>
+            <p class="hint">二维码将在这里显示</p>
+        </div>
+
+        <div class="action-buttons">
+            <button class="action-btn fullscreen-btn" id="fullscreen-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path
+                        d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3">
+                    </path>
+                </svg>
+                全屏查看
+            </button>
+            <button class="action-btn download-btn" id="download-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                下载二维码
+            </button>
+        </div>
+    </div>
+
+    <!-- 全屏模态框 -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <button class="close-btn" id="close-modal">✖</button>
+            <div id="modal-qrcode"></div>
+        </div>
+    </div>
+
 </body>
+<script src="./doc/script.js"></script>
 
 </html>
