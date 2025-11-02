@@ -1,422 +1,320 @@
-// 获取页面参数
-var params = new URLSearchParams(window.location.search);
+document.addEventListener('DOMContentLoaded', () => {
+    // 游戏状态
+    const gameState = {
+        board: Array(9).fill(''),
+        currentPlayer: '✖',
+        gameMode: null,
+        gameActive: false,
+        gameOver: false
+    };
 
-// 定义变量 棋盘数组，游戏状态，落子方，初始值
-let board = [];
-let currentStatus;
-let Move = true;
-let initValue = true;
+    // DOM元素
+    const gameBoard = document.getElementById('gameBoard');
+    const gameInfo = document.getElementById('gameInfo');
+    const resultDisplay = document.getElementById('result');
+    const restartBtn = document.getElementById('restartBtn');
+    const modeButtons = document.querySelectorAll('.mode-btn');
 
-// 键盘数字锁🔒，有需求时开，(true):可通过数字键盘[1-9]落子
-Keyboard_Num_Lock = false;
-
-
-// 游戏状态
-const gameStatus = {
-    IN_PROGRESS: 0,
-    PLAYER_WON: 1,
-    AI_WON: 2,
-    DRAW: 3
-};
-
-// 默认游戏难度，类型
-let Difficulty = 'medium';
-let gameType = 'ai';
-
-// 玩家落子
-function playerMove(row, col) {
-    if (currentStatus === gameStatus.IN_PROGRESS && board[row][col] === '') {
-        if (gameType !== 'ai') {
-            if (Move) {
-                Move = false;
-                board[row][col] = '✖';
-            } else {
-                Move = true;
-                board[row][col] = '⚪';
-            }
-            renderBoard();
-            checkGameStatus();
-        } else {
-            board[row][col] = '✖';
-            renderBoard();
-            checkGameStatus();
-            // ai落子
-            if (currentStatus === gameStatus.IN_PROGRESS && gameType == 'ai') {
-                aiMove();
-                renderBoard();
-                checkGameStatus();
-            }
-        }
-    } else if (currentStatus !== gameStatus.IN_PROGRESS) {
-        initGame(Difficulty, gameType);
-    }
-}
-
-// AI落子
-function aiMove() {
-    // 获取可用的格子
-    let availableMoves = getAvailableMoves();
-
-    // 根据难度选择不同的AI算法
-    switch (Difficulty) {
-        case 'easy':
-            randomMove(availableMoves);
-            break;
-        case 'medium':
-            // 首次落子时随机落子
-            if (initValue) {
-                randomMove(availableMoves);
-                initValue = false;
-            } else {
-                minimaxMove(availableMoves, 1);
-            }
-            break;
-        case 'hard':
-            minimaxMove(availableMoves, 1);
-            break;
-        default:
-            randomMove(availableMoves);
-    }
-}
-
-// 简单AI随机落子
-function randomMove(availableMoves) {
-    let randomIndex = Math.floor(Math.random() * availableMoves.length);
-    let move = availableMoves[randomIndex];
-    board[move.row][move.col] = '⚪';
-    console.info('AI 随机落子', [move.row, move.col], board);
-}
-
-// AI使用minimax算法进行移动
-function minimaxMove(availableMoves, depth) {
-    let bestScore = -Infinity;
-    let bestMove = null;
-
-    for (let move of availableMoves) {
-        board[move.row][move.col] = '⚪';
-        let score = minimax(board, depth + 1, false);
-        board[move.row][move.col] = '';
-
-        if (score > bestScore) {
-            bestScore = score;
-            bestMove = move;
-        }
-    }
-
-    board[bestMove.row][bestMove.col] = '⚪';
-    console.info('AI 搜索落子', [bestMove.row, bestMove.col], board);
-}
-
-// Minimax算法
-function minimax(board, depth, isMaximizingPlayer) {
-    let result = checkWinner();
-    if (result !== null) {
-        return getScore(result, depth);
-    }
-
-    if (isMaximizingPlayer) {
-        let bestScore = -Infinity;
-
-        for (let i = 0; i < 3; i++) {
-            for (let j = 0; j < 3; j++) {
-                if (board[i][j] === '') {
-                    board[i][j] = '⚪';
-                    let score = minimax(board, depth + 1, false);
-                    board[i][j] = '';
-                    bestScore = Math.max(bestScore, score);
-                }
-            }
+    // 初始化游戏
+    function initGame() {
+        // 创建棋盘格子
+        gameBoard.innerHTML = '';
+        for (let i = 0; i < 9; i++) {
+            const cell = document.createElement('div');
+            cell.classList.add('cell');
+            cell.dataset.index = i;
+            cell.addEventListener('click', () => handleCellClick(i));
+            gameBoard.appendChild(cell);
         }
 
-        return bestScore;
-    } else {
-        let bestScore = +Infinity;
+        // 重置游戏状态
+        gameState.board = Array(9).fill('');
+        gameState.currentPlayer = '✖';
+        gameState.gameActive = true;
+        gameState.gameOver = false;
 
-        for (let i = 0; i < 3; i++) {
-            for (let j = 0; j < 3; j++) {
-                if (board[i][j] === '') {
-                    board[i][j] = '✖';
-                    let score = minimax(board, depth + 1, true);
-                    board[i][j] = '';
-                    bestScore = Math.min(bestScore, score);
-                }
-            }
+        // 清空结果显示
+        resultDisplay.textContent = '';
+        resultDisplay.className = 'result';
+
+        // 更新游戏信息
+        updateGameInfo();
+    }
+
+    // 更新游戏信息显示
+    function updateGameInfo() {
+        if (!gameState.gameMode) {
+            gameInfo.textContent = '请选择游戏模式开始游戏';
+            return;
         }
 
-        return bestScore;
-    }
-}
+        if (gameState.gameOver) return;
 
-// 根据游戏结果和深度返回分数
-function getScore(result, depth) {
-    if (result === '✖') {
-        // 玩家胜利时返回负分数，因为AI是最小化玩家得分的
-        return -10 + depth;
-    } else if (result === '⚪') {
-        // AI胜利时返回正分数，因为AI是最大化自身得分的
-        return 10 - depth;
-    } else {
-        // 平局返回0
-        return 0;
-    }
-}
+        const modeNames = {
+            'two-players': '双人游戏',
+            'easy': '简单AI',
+            'medium': '普通AI',
+            'hard': '困难AI'
+        };
 
-// 获取可用的格子
-function getAvailableMoves() {
-    let moves = [];
-    for (let row = 0; row < 3; row++) {
-        for (let col = 0; col < 3; col++) {
-            if (board[row][col] === '') {
-                moves.push({ row, col });
+        const playerNames = {
+            '✖': '玩家 ✖',
+            '⭕︎': gameState.gameMode === 'two-players' ? '玩家 ⭕︎' : 'AI'
+        };
+
+        gameInfo.textContent = `${modeNames[gameState.gameMode]} - 当前回合: ${playerNames[gameState.currentPlayer]}`;
+    }
+
+    // 处理格子点击
+    function handleCellClick(index) {
+        // 游戏未开始或已结束，或者格子已被占用
+        if (!gameState.gameActive || !gameState.gameMode || gameState.gameOver || gameState.board[index] !== '') {
+            return;
+        }
+
+        // 在双人模式下，或者当前是玩家回合
+        if (gameState.gameMode === 'two-players' || gameState.currentPlayer === '✖') {
+            makeMove(index);
+
+            // 如果不是双人模式且游戏未结束，则AI走棋
+            if (gameState.gameMode !== 'two-players' && !gameState.gameOver) {
+                setTimeout(() => {
+                    makeAIMove();
+                }, 500);
             }
         }
     }
-    return moves;
-}
 
-// 检查游戏状态：平局、玩家胜利、AI胜利
-function checkGameStatus() {
-    let winner = checkWinner();
-    const container = document.getElementById('container');
-    const resultDiv = document.getElementById('result');
-    if (winner !== null) {
-        if (winner === '✖') {
-            currentStatus = gameStatus.PLAYER_WON;
-            console.info('%c玩家✖胜利！', 'color:lightgreen;', board);
-            resultDiv.innerHTML = "玩家✖胜利！";
-        } else if (winner === '⚪') {
-            if (gameType == 'ai') {
-                currentStatus = gameStatus.AI_WON;
-                console.info('%cAI⚪胜利！', 'color:lightgreen;', board);
-                resultDiv.innerHTML = "AI⚪胜利！";
-            } else {
-                currentStatus = gameStatus.PLAYER_WON;
-                console.info('%c玩家⚪胜利！', 'color:lightgreen;', board);
-                resultDiv.innerHTML = "玩家⚪胜利！";
-            }
-        } else {
-            currentStatus = gameStatus.DRAW;
-            console.info('%c双方平局！', 'color:lightgreen;', board);
-            resultDiv.innerHTML = "双方平局！";
-        }
-        container.title = resultDiv.innerHTML + "\n点击棋盘(重新)开始";
-    } else {
-        if (gameType == 'ai') {
-            resultDiv.innerHTML = "进行中...";
-            currentStatus = gameStatus.IN_PROGRESS;
-            container.title = "进行中...";
-        } else {
-            if (Move) {
-                resultDiv.innerHTML = "玩家✖准备落子中...";
-                currentStatus = gameStatus.IN_PROGRESS;
-                container.title = "玩家✖准备落子中...";
-            } else {
-                resultDiv.innerHTML = "玩家⚪准备落子中...";
-                currentStatus = gameStatus.IN_PROGRESS;
-                container.title = "玩家⚪准备落子中...";
-            }
+    // 执行走棋
+    function makeMove(index) {
+        // 更新棋盘状态
+        gameState.board[index] = gameState.currentPlayer;
 
-        }
-    }
-}
+        // 更新UI
+        const cell = document.querySelector(`.cell[data-index="${index}"]`);
+        cell.textContent = gameState.currentPlayer;
+        cell.classList.add(gameState.currentPlayer.toLowerCase());
 
-// 检查胜利者
-function checkWinner() {
-    // 检查行
-    for (let i = 0; i < 3; i++) {
-        if (board[i][0] !== '' && board[i][0] === board[i][1] && board[i][1] === board[i][2]) {
-            return board[i][0];
+        // 检查游戏是否结束
+        checkGameStatus();
+
+        // 如果没有结束，切换玩家
+        if (!gameState.gameOver) {
+            gameState.currentPlayer = gameState.currentPlayer === '✖' ? '⭕︎' : '✖';
+            updateGameInfo();
         }
     }
 
-    // 检查列
-    for (let j = 0; j < 3; j++) {
-        if (board[0][j] !== '' && board[0][j] === board[1][j] && board[1][j] === board[2][j]) {
-            return board[0][j];
-        }
-    }
+    // AI走棋
+    function makeAIMove() {
+        if (gameState.gameOver) return;
 
-    // 检查对角线
-    if (board[0][0] !== '' && board[0][0] === board[1][1] && board[1][1] === board[2][2]) {
-        return board[0][0];
-    }
+        let moveIndex;
 
-    if (board[0][2] !== '' && board[0][2] === board[1][1] && board[1][1] === board[2][0]) {
-        return board[0][2];
-    }
-
-    // 检查平局
-    let isDraw = true;
-    for (let i = 0; i < 3; i++) {
-        for (let j = 0; j < 3; j++) {
-            if (board[i][j] === '') {
-                isDraw = false;
+        switch (gameState.gameMode) {
+            case 'easy':
+                moveIndex = getEasyAIMove();
                 break;
+            case 'medium':
+                moveIndex = getMediumAIMove();
+                break;
+            case 'hard':
+                moveIndex = getHardAIMove();
+                break;
+        }
+
+        if (moveIndex !== undefined) {
+            makeMove(moveIndex);
+        }
+    }
+
+    // 简单AI：随机选择空位
+    function getEasyAIMove() {
+        const emptyCells = gameState.board
+            .map((cell, index) => cell === '' ? index : null)
+            .filter(index => index !== null);
+
+        return emptyCells.length > 0 ?
+            emptyCells[Math.floor(Math.random() * emptyCells.length)] :
+            undefined;
+    }
+
+    // 普通AI：基于简单规则
+    function getMediumAIMove() {
+        // 1. 如果能赢，就赢
+        let move = findWinningMove('⭕︎');
+        if (move !== undefined) return move;
+
+        // 2. 如果能阻止玩家赢，就阻止
+        move = findWinningMove('✖');
+        if (move !== undefined) return move;
+
+        // 3. 否则随机选择
+        return getEasyAIMove();
+    }
+
+    // 困难AI：使用Minimax算法
+    function getHardAIMove() {
+        return minimax(gameState.board, '⭕︎').index;
+    }
+
+    // Minimax算法实现
+    function minimax(board, player) {
+        // 检查游戏是否结束
+        const winner = checkWinner(board);
+        if (winner === '⭕︎') return { score: 10 };
+        if (winner === '✖') return { score: -10 };
+        if (isBoardFull(board)) return { score: 0 };
+
+        // 收集所有可能的走法
+        const moves = [];
+        for (let i = 0; i < board.length; i++) {
+            if (board[i] === '') {
+                const move = {};
+                move.index = i;
+
+                // 尝试这一步
+                board[i] = player;
+
+                // 递归调用minimax
+                if (player === '⭕︎') {
+                    const result = minimax(board, '✖');
+                    move.score = result.score;
+                } else {
+                    const result = minimax(board, '⭕︎');
+                    move.score = result.score;
+                }
+
+                // 撤销这一步
+                board[i] = '';
+
+                moves.push(move);
             }
         }
-        if (!isDraw) {
-            break;
-        }
-    }
 
-    if (isDraw) {
-        return 'draw';
-    }
-
-    return null;
-}
-
-// 根据游戏状态渲染棋盘
-function renderBoard() {
-    let cells = document.getElementsByClassName('cell');
-    let index = 0;
-    for (let row = 0; row < 3; row++) {
-        for (let col = 0; col < 3; col++) {
-            cells[index].title = board[row][col];
-            cells[index].innerHTML = board[row][col];
-            index++;
-        }
-    }
-}
-
-// 检查并设置游戏难度
-function setDifficulty(dif) {
-    if (dif) {
-        Difficulty = dif;
-    } else {
-        dif = params.get('dif');
-        if (dif) {
-            switch (dif) {
-                case '0':
-                case 'easy':
-                    Difficulty = 'easy';
-                    break;
-                case '2':
-                case 'hard':
-                    Difficulty = 'hard';
-                    break;
-                case '1':
-                case 'medium':
-                    break;
-                default:
-                    console.error(`参数错误'%c dif=${dif} %c'；\n游戏难度参数的规则(dif=)：\n\t0\t--简单难度 (easy)\n\t1\t--中等难度(medium)\n\t2\t--困难难度 (hard)`, 'color: red;background-color: pink;', '');
-                    break;
+        // 选择最佳走法
+        let bestMove;
+        if (player === '⭕︎') {
+            let bestScore = -Infinity;
+            for (let i = 0; i < moves.length; i++) {
+                if (moves[i].score > bestScore) {
+                    bestScore = moves[i].score;
+                    bestMove = i;
+                }
             }
-        }
-    }
-    const setDifficultyDiv = document.getElementById('setDifficultyDiv');
-    console.info('当前游戏难度：', Difficulty);
-    setDifficultyDiv.title = '已选中：' + Difficulty;
-    let a = { easy: "简单 easy", medium: "中等 medium", hard: "困难 hard" };
-    for (const key in a) { if (a.hasOwnProperty(key)) { document.getElementById(key).innerHTML = `<b>${a[key]}</b>`; } }
-    if (gameType == 'ai') {
-        document.getElementById(Difficulty).innerHTML += `<b style="color: #337ab7;position: absolute;right: 20px;font-size: 200%;margin-top: -10px;">✔</b>`;
-    }
-}
-
-// 检查并设置游戏类型(player,ai)
-function setType(t) {
-    if (t) {
-        gameType = t;
-    } else {
-        t = params.get('type')
-        if (t) {
-            switch (t) {
-                case 'ai':
-                case '0':
-                    gameType = 'ai';
-                    break;
-
-                case 'player':
-                case '1':
-                    gameType = 'player';
-                    break;
-                default:
-                    console.error(`参数错误'%c type=${t} %c'；\n游戏类型参数的规则(type=)：\n\t0\t--与AI对战  (ai)\n\t1\t--与玩家对战(player)`, 'color: red;background-color: pink;', '');
-                    break;
-            }
-        }
-    }
-    const setTypeDiv = document.getElementById('setTypeDiv');
-    console.info('当前游戏类型：', gameType);
-    setTypeDiv.title = '已选中：' + gameType;
-    document.getElementById('ai').style.backgroundColor = '#555';
-    document.getElementById('player').style.backgroundColor = '#555';
-    document.getElementById(gameType).style.backgroundColor = '#337ab7';
-    let b = ['easy', 'medium', 'hard'];
-    for (let i = 0; i < b.length; i++) {
-        if (gameType == 'ai') {
-            document.getElementById(b[i]).disabled = false;
         } else {
-            document.getElementById(b[i]).disabled = true;
+            let bestScore = Infinity;
+            for (let i = 0; i < moves.length; i++) {
+                if (moves[i].score < bestScore) {
+                    bestScore = moves[i].score;
+                    bestMove = i;
+                }
+            }
+        }
+
+        return moves[bestMove];
+    }
+
+    // 查找获胜的走法
+    function findWinningMove(player) {
+        for (let i = 0; i < gameState.board.length; i++) {
+            if (gameState.board[i] === '') {
+                // 模拟这一步
+                gameState.board[i] = player;
+
+                // 检查是否获胜
+                if (checkWinner(gameState.board) === player) {
+                    // 撤销模拟
+                    gameState.board[i] = '';
+                    return i;
+                }
+
+                // 撤销模拟
+                gameState.board[i] = '';
+            }
+        }
+        return undefined;
+    }
+
+    // 检查游戏状态
+    function checkGameStatus() {
+        const winner = checkWinner(gameState.board);
+
+        if (winner) {
+            gameState.gameOver = true;
+            gameState.gameActive = false;
+
+            const winnerName = winner === '✖' ? '玩家 ✖' :
+                (gameState.gameMode === 'two-players' ? '玩家 ⭕︎' : 'AI');
+
+            resultDisplay.textContent = `${winnerName} 获胜!`;
+            resultDisplay.classList.add('win');
+        } else if (isBoardFull(gameState.board)) {
+            gameState.gameOver = true;
+            gameState.gameActive = false;
+
+            resultDisplay.textContent = '平局!';
+            resultDisplay.classList.add('draw');
         }
     }
 
-}
+    // 检查是否有获胜者
+    function checkWinner(board) {
+        // 所有可能的获胜组合
+        const winPatterns = [
+            [0, 1, 2], [3, 4, 5], [6, 7, 8], // 横
+            [0, 3, 6], [1, 4, 7], [2, 5, 8], // 竖
+            [0, 4, 8], [2, 4, 6]             // 对角
+        ];
 
-// Z-Box相关操作
-function Box(a, b) {
-    console.log(`Z-Box: (${a}) the (${b});`);
-    if (a == 'close') {
-        if (b) {
-            document.getElementById(b).style.height = "0vh";
-            setTimeout(() => { document.getElementById('Z-Box').style.display = 'none'; }, 300);
-            initGame(Difficulty, gameType)
+        for (const pattern of winPatterns) {
+            const [a, b, c] = pattern;
+            if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+                return board[a];
+            }
         }
-    } else if (a == 'show' || a == 'open') {
-        if (b) {
-            document.getElementById('Z-Box').style.display = 'block';
-            setTimeout(() => { document.getElementById(b).style.height = "80vh"; }, 10);
-        }
-    }
-}
 
-// 初始化游戏-参数(难度，类型)
-function initGame(Dif, ty) {
-    // 初始化棋盘数组，落子方，初始值，result框
-    board = [
-        ['', '', ''],
-        ['', '', ''],
-        ['', '', '']
-    ];
-    if (currentStatus == gameStatus.PLAYER_WON) { Move = !Move; }
-    initValue = true;
-    if (Move) {
-        document.getElementById('result').innerHTML = '请玩家 ✖ 开始落子';
-    } else {
-        if (gameType == 'ai') {
-            document.getElementById('result').innerHTML = '请玩家 ✖ 开始落子';
-        } else {
-            document.getElementById('result').innerHTML = '请玩家 ⚪ 开始落子';
-        }
+        return null;
     }
 
-    // 初始化游戏状态，默认为进行中
-    currentStatus = gameStatus.IN_PROGRESS;
-    renderBoard();
-    setDifficulty(Dif);
-    setType(ty)
-    console.log('%c 已初始化井字棋！ ', 'background:green;padding:5px;');
-}
-
-// 定义重新开始按键(R), 数字键
-document.addEventListener('keyup', function (event) {
-    console.log('按下了：', event.key, event);
-    if (event.key == "r" || event.key == "R" || event.code === 'keyR' || event.key == "0") {
-        initGame(Difficulty, gameType);
+    // 检查棋盘是否已满
+    function isBoardFull(board) {
+        return board.every(cell => cell !== '');
     }
-    if (Keyboard_Num_Lock) {
-        if (!isNaN(parseInt(event.key))) {
-            let keyNum = [[7, 8, 9], [4, 5, 6], [1, 2, 3,]];
-            keyNum.some((innerArray, i) => {
-                const j = innerArray.findIndex(value => value.toString() === event.key);
-                if (j !== -1) { playerMove(i, j) }
-            });
+
+    // 模式选择
+    modeButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // 更新活动按钮
+            modeButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+
+            // 设置游戏模式
+            gameState.gameMode = button.dataset.mode;
+
+            // 初始化游戏
+            initGame();
+        });
+    });
+
+    // 绑定数字键盘事件
+    document.addEventListener('keydown', event => {
+        const { code } = event;
+        if (code.startsWith('Numpad')) {
+            const index = parseInt(code.slice(-1));
+            if (index >= 7) {
+                handleCellClick(index - 7);
+            } else if (index <= 3) {
+                handleCellClick(index + 5);
+            } else {
+                handleCellClick(index - 1);
+            }
         }
-    }
-})
+    });
 
-// 用户设备信息
-console.log('用户设备信息：', navigator);
+    // 重新开始游戏
+    restartBtn.addEventListener('click', initGame);
 
-initGame();
+    // 初始化游戏
+    initGame();
+});

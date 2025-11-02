@@ -1,199 +1,180 @@
-html {
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
-    font-family: Arial, sans-serif;
-    background-color: palevioletred;
+* {
     margin: 0;
     padding: 0;
-    color: #333;
+    user-select: none;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
-    margin: 0;
-    padding: 0;
-    background-color: #222;
-    height: 100vh;
-    width: 100vw;
-}
-
-#Z-Box {
-    height: 100vh;
-    width: 100vw;
-    background-color: rgba(0, 0, 0, 0.6);
-    position: fixed;
-    display: none;
-    z-index: 99;
-}
-
-#colse-Z {
-    position: absolute;
-    font-size: 300%;
-    text-align: right;
-    color: #eee;
-    width: 100vw;
-    height: 100vh;
-}
-
-#settings {
-    text-align: center;
-    font-family: "Museo Sans", sans-serif;
-    position: absolute;
-    margin: 0;
-    padding: 0;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #ddd;
-    border-radius: 20px;
-    overflow: hidden;
-    border: 1px solid #fff;
-    min-width: 60vw;
-    height: 0vh;
-    transition: height .5s ease;
-    box-shadow: 0 0 50px #777;
-}
-
-#settings h3 {
-    margin: 0;
-    padding: 0;
-}
-
-#setTypeDiv button {
-    width: 30%;
-    padding: 5px;
-    margin: 3px;
-    border: 1px solid #fff;
-    color: #ddd;
-    transition: .1s ease;
-    border-radius: 5px;
-} 
-
-#setTypeDiv button:active {
-    font-size: large;
-}
-
-#setDifficultyDiv button {
-    width: 60%;
-    padding: 5px;
-    margin: 2px;
-    border: 1px solid #fff;
-    color: #ddd;
-    transition: .1s ease;
-    border-radius: 5px;
-}
-
-#setDifficultyDiv button:active {
-    width: 80%;
-    font-size: large;
-}
-
-#colse-set-Btn {
-    font-size: 150%;
-    position: absolute;
-    bottom: 0%;
-    left: 0;
-    width: 100%;
-    border: none;
-    background-color: lightcoral;
-    color: #ddd;
-    border-radius: 3px;
-}
-
-#settingBtn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    padding: 10px 15px;
-    background-color: #337ab7;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 4px;
-    transition: 0.3s ease;
-    cursor: pointer;
-    font-size: 110%;
-    z-index: 98;
-}
-
-#settingBtn:hover {
-    background-color: skyblue;
-    color: #555;
-    font-size: larger;
-    box-shadow: 0 0 50px #9dd1ff;
-}
-
-.container {
-    top: 50%;
-    left: 50%;
-    position: absolute;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    border-radius: 50px;
-    border: 1px solid #fff;
-    padding: 50px;
-    background-color: rgb(220, 220, 220);
-}
-
-.container .game {
-    margin-top: 20px;
-}
-
-.container .game .row {
-    display: flex;
-    justify-content: center;
-}
-
-.cell {
-    width: 80px;
-    height: 80px;
-    border: 2px solid #333;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 48px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    min-height: 100vh;
+    background: #444;
+    padding: 20px;
 }
 
-.cell:active {
-    background-color: #333;
-    color: #ccc;
-    box-shadow: 0px 0px 100px rgba(0, 0, 0, 0.8);
+.container {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    padding: 30px;
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
 }
 
-.container .result {
-    margin-top: 20px;
+h1 {
+    color: #7987ff;
+    margin-bottom: 20px;
+    font-size: 2.2rem;
+}
+
+.game-info {
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+    color: white;
+    min-height: 30px;
+}
+
+.game-board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+    margin: 0 auto 15px;
+    max-width: 300px;
+}
+
+.cell {
+    aspect-ratio: 1;
+    background-color: #edf2f790;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5rem;
     font-weight: bold;
-    font-size: 120%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-@media (max-width: 600px) {
-    .cell {
-        width: 60px;
-        height: 60px;
-        font-size: 36px;
+.cell:hover {
+    background-color: #e2e8f0;
+    transform: translateY(-2px);
+}
+
+.cell.✖ {
+    color: #e53e3e;
+}
+
+.cell.⭕︎ {
+    color: #3182ce;
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.mode-selector {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.mode-btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    background-color: #cbd5e0;
+    color: #4a5568;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex: 1;
+    min-width: 100px;
+}
+
+.mode-btn.active {
+    background-color: #5a67d8;
+    color: white;
+}
+
+.mode-btn:hover:not(.active) {
+    background-color: #a0aec0;
+}
+
+.restart-btn {
+    padding: 12px 20px;
+    background-color: #48bb78;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 1rem;
+}
+
+.restart-btn:hover {
+    background-color: #38a169;
+}
+
+.result {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 15px;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.win {
+    color: #38a169;
+    animation: pulse 1s infinite;
+}
+
+.draw {
+    color: #d69e2e;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
     }
 }
 
-@media (min-width: 767px) {
-    .cell {
-        width: 100px;
-        height: 100px;
-        font-size: 50px;
+@media (max-width: 480px) {
+    .container {
+        padding: 20px 15px;
     }
-}
 
-@media (min-width: 1023px) {
-    .cell {
-        width: 150px;
-        height: 150px;
-        font-size: 80px;
+    h1 {
+        font-size: 1.8rem;
     }
-}
 
-@media (max-height: 700px) {
     .cell {
-        width: 60px;
-        height: 60px;
-        font-size: 36px;
+        font-size: 2rem;
+    }
+
+    .mode-btn {
+        min-width: 80px;
+        padding: 8px 10px;
+        font-size: 0.9rem;
     }
 }
